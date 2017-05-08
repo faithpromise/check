@@ -44,6 +44,7 @@
     import auth from './auth';
     import authLayout from '../layouts/auth.vue';
     import clientStorage from '../../sunday-morning/core/js/helpers/client-storage';
+    import router from '../routes';
 
     let error_messages = {
         email_invalid:       'The email address provided is not a valid email address.',
@@ -61,7 +62,7 @@
         data() {
             return {
                 creds:         {
-                    email:    clientStorage.get('login_email'),
+                    email:    localStorage.getItem('user_email'),
                     password: '',
                 },
                 is_logging_in: false,
@@ -89,11 +90,9 @@
                 this.clear_error();
                 this.is_logging_in = true;
 
-                clientStorage.set('login_email', this.creds.email);
-
                 auth.login(this.creds)
                     .then(() => {
-                        alert('logged in');
+                        router.push({ name: 'home' });
                     })
                     .catch((error) => {
                         this.is_logging_in = false;

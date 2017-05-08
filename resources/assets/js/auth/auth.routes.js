@@ -1,4 +1,5 @@
 import login from './route-login.vue';
+import logout from './route-logout.vue';
 import forgot from './route-password-forgot.vue';
 
 export default [
@@ -11,7 +12,7 @@ export default [
     {
         path:      '/logout',
         name:      'logout',
-        component: forgot
+        component: logout
     },
 
     {

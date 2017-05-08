@@ -5,12 +5,17 @@ import store from './vuex/store';
 import auth from './auth/auth';
 import auth_routes from './auth/auth.routes';
 
+let placeholder = { template: '<div>Placeholder</div>' };
+
 const routes = [
     {
         path:      '/',
         component: defaultLayout,
         children:  [
             { name: 'home', path: '', component: projects },
+            { name: 'projects', path: '/projects', component: placeholder },
+            { name: 'people', path: '/people', component: placeholder },
+            { name: 'settings', path: '/settings', component: placeholder },
         ]
     },
 

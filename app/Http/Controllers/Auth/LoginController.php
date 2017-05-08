@@ -12,8 +12,7 @@ use Tymon\JWTAuth\Facades\JWTAuth;
 
 class LoginController extends Controller {
 
-    public function login(Request $request)
-    {
+    public function login(Request $request) {
 
         $credentials = $request->only('email', 'password');
 
@@ -29,7 +28,7 @@ class LoginController extends Controller {
         /**
          * Make sure user exists
          */
-        if (!User::whereEmail($credentials['email'])->first()) {
+        if (!$user = User::whereEmail($credentials['email'])->first()) {
             return response()->json(['error' => 'user_not_found'], 404);
         }
 
@@ -43,12 +42,16 @@ class LoginController extends Controller {
             }
         } catch (JWTException $e) {
             // something went wrong whilst attempting to encode the token
-            return response()->json(['error' => 'could_not_create_token'], 500);
+            return response()->json(['error' => 'unknown'], 500);
         }
 
         $current_time = Carbon::now()->timestamp;
+        $user_name = $user->name;
+        $user_email = $user->email;
+        $user_avatar_url = $user->avatar_url;
+        $remember_me = true;
 
-        return response()->json(compact('token', 'current_time'));
+        return response()->json(compact('token', 'current_time', 'user_name', 'user_email', 'user_avatar_url', 'remember_me'));
 
     }
 

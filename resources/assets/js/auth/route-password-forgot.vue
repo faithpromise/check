@@ -59,7 +59,7 @@
 
         data() {
             return {
-                email:      clientStorage.get('login_email'),
+                email:      localStorage.getItem('user_email'),
                 success:    false,
                 error_code: null,
             }
