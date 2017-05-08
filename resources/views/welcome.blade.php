@@ -1,95 +1,61 @@
-<!DOCTYPE html>
+<?php
+
+use Illuminate\Support\Facades\App;
+
+$is_production = App::environment('production');
+$js_url = 'js/app.js';
+$css_url = 'css/app.css';
+
+$scripts = [
+    '//cdn.rawgit.com/taylorhakes/promise-polyfill/master/promise.js',
+    'https://unpkg.com/axios@0.16.0/dist/axios' . ($is_production ? '.min.js' : '.js'),
+    '//cdnjs.cloudflare.com/ajax/libs/vue/2.2.6/vue' . ($is_production ? '.min.js' : '.js'),
+    '//cdnjs.cloudflare.com/ajax/libs/vue-router/2.3.1/vue-router' . ($is_production ? '.min.js' : '.js'),
+    '//cdnjs.cloudflare.com/ajax/libs/vuex/2.2.1/vuex' . ($is_production ? '.min.js' : '.js'),
+    'https://ricostacruz.com/nprogress/nprogress.js',
+];
+
+?><!DOCTYPE html>
 <html lang="{{ config('app.locale') }}">
     <head>
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1">
 
-        <title>Laravel</title>
-
-        <!-- Fonts -->
-        <link href="https://fonts.googleapis.com/css?family=Raleway:100,600" rel="stylesheet" type="text/css">
+        <title>Project Management System</title>
 
         <!-- Styles -->
-        <style>
-            html, body {
-                background-color: #fff;
-                color: #636b6f;
-                font-family: 'Raleway', sans-serif;
-                font-weight: 100;
-                height: 100vh;
-                margin: 0;
-            }
+        <link rel="stylesheet" href="{{ $is_production ? mix($css_url) : '/' . $css_url }}">
 
-            .full-height {
-                height: 100vh;
-            }
-
-            .flex-center {
-                align-items: center;
-                display: flex;
-                justify-content: center;
-            }
-
-            .position-ref {
-                position: relative;
-            }
-
-            .top-right {
-                position: absolute;
-                right: 10px;
-                top: 18px;
-            }
-
-            .content {
-                text-align: center;
-            }
-
-            .title {
-                font-size: 84px;
-            }
-
-            .links > a {
-                color: #636b6f;
-                padding: 0 25px;
-                font-size: 12px;
-                font-weight: 600;
-                letter-spacing: .1rem;
-                text-decoration: none;
-                text-transform: uppercase;
-            }
-
-            .m-b-md {
-                margin-bottom: 30px;
-            }
-        </style>
+        <!-- CSRF -->
+        <script>window.Laravel = {!! json_encode(['csrfToken' => csrf_token()]) !!};</script>
     </head>
     <body>
-        <div class="flex-center position-ref full-height">
-            @if (Route::has('login'))
-                <div class="top-right links">
-                    @if (Auth::check())
-                        <a href="{{ url('/home') }}">Home</a>
-                    @else
-                        <a href="{{ url('/login') }}">Login</a>
-                        <a href="{{ url('/register') }}">Register</a>
-                    @endif
-                </div>
-            @endif
 
-            <div class="content">
-                <div class="title m-b-md">
-                    Laravel
-                </div>
+        <svg xmlns="http://www.w3.org/2000/svg" style="display:none;">
+            <defs>
+                <?php
+                foreach (['images/svg-icons/*.svg'] as $rel_path):
+                    foreach (glob(public_path($rel_path)) as $path):
+                        include($path);
+                    endforeach;
+                endforeach;
+                ?>
+            </defs>
+        </svg>
 
-                <div class="links">
-                    <a href="https://laravel.com/docs">Documentation</a>
-                    <a href="https://laracasts.com">Laracasts</a>
-                    <a href="https://laravel-news.com">News</a>
-                    <a href="https://forge.laravel.com">Forge</a>
-                    <a href="https://github.com/laravel/laravel">GitHub</a>
-                </div>
-            </div>
+        <div id="app" class="Layout">
+            <router-view></router-view>
         </div>
+
+        @foreach($scripts as $script)
+            <script src="{{ $script }}"></script>
+        @endforeach
+
+        <script>
+            NProgress.configure({ showSpinner: false });
+        </script>
+
+        <script src="{{ $is_production ? mix($js_url) : '/' . $js_url }}"></script>
     </body>
 </html>
