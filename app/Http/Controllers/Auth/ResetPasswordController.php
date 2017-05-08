@@ -3,37 +3,29 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
-use Illuminate\Foundation\Auth\ResetsPasswords;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
+use Tymon\JWTAuth\Facades\JWTAuth;
 
-class ResetPasswordController extends Controller
-{
-    /*
-    |--------------------------------------------------------------------------
-    | Password Reset Controller
-    |--------------------------------------------------------------------------
-    |
-    | This controller is responsible for handling password reset requests
-    | and uses a simple trait to include this behavior. You're free to
-    | explore this trait and override any methods you wish to tweak.
-    |
-    */
+class ResetPasswordController extends Controller {
 
-    use ResetsPasswords;
-
-    /**
-     * Where to redirect users after resetting their password.
-     *
-     * @var string
-     */
-    protected $redirectTo = '/home';
-
-    /**
-     * Create a new controller instance.
-     *
-     * @return void
-     */
-    public function __construct()
+    public function reset(Request $request)
     {
-        $this->middleware('guest');
+
+        $password = $request->get('password');
+
+        if (strlen($password) < 8) {
+            return response()->json(['error' => 'password_too_short'], 422);
+        }
+
+        if (!$user = JWTAuth::parseToken()->authenticate()) {
+            return response()->json(['error' => 'user_not_found'], 422);
+        }
+
+        $user->password = Hash::make($password);
+        $user->save();
+
+        return response()->json(['success' => 'password_reset']);
     }
+
 }
