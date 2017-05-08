@@ -16,6 +16,7 @@ const routes = [
             { name: 'projects', path: '/projects', component: placeholder },
             { name: 'people', path: '/people', component: placeholder },
             { name: 'settings', path: '/settings', component: placeholder },
+            { name: 'profile', path: '/profile', component: placeholder },
         ]
     },
 

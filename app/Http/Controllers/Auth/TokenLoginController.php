@@ -32,6 +32,8 @@ class TokenLoginController extends Controller {
         $user->password_reset_token = null;
         $user->save();
 
+        // TODO: Add custom claims like on login
+
         /**
          * Auto login
          */
