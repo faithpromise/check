@@ -17,7 +17,7 @@ Route::post('/auth/login', 'Auth\LoginController@login');
 //Route::post('/auth/signup', 'Auth\RegisterController@signup');
 //Route::post('/auth/verify', 'Auth\RegisterController@verify');
 Route::post('/auth/send-token', 'Auth\ForgotPasswordController@sendResetLinkEmail');
-Route::post('/auth/token-login', 'Auth\TokenLoginController@login');
+Route::post('/auth/token-login', 'Auth\LoginController@token_login');
 Route::post('/auth/reset-password', ['uses' => 'Auth\ResetPasswordController@reset', 'middleware' => ['jwt.auth']]);
 
 /** @noinspection PhpVoidFunctionResultUsedInspection */
