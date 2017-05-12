@@ -22,6 +22,10 @@ class User extends Authenticatable {
     |--------------------------------------------------------------------------
     */
 
+    public function department() {
+        return $this->belongsTo(Department::class);
+    }
+
     public function comments() {
         return $this->belongsToMany(Comment::class, 'comment_recipients');
     }

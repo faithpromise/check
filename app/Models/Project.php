@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Scopes\ActiveProjectScope;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
@@ -10,8 +11,12 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * Class Project
  * @package App\Models
  *
- * @property string full_name;
- * @property User requester;
+ *
+ * @property Carbon $due_at
+ * @property Carbon $artwork_due_at
+ * @property integer $weekdays_remaining
+ * @property string $full_name;
+ * @property User $requester;
  *
  */
 class Project extends Model {
@@ -25,6 +30,17 @@ class Project extends Model {
     private $create_setup_task = true;
     private $create_estimate_task = true;
     private $rebuild_owners_timeline = false;
+
+    /*
+    |--------------------------------------------------------------------------
+    | Global Scopes
+    |--------------------------------------------------------------------------
+    */
+
+    protected static function boot() {
+        parent::boot();
+        static::addGlobalScope(new ActiveProjectScope);
+    }
 
     /*
     |--------------------------------------------------------------------------
@@ -97,70 +113,78 @@ class Project extends Model {
     |--------------------------------------------------------------------------
     */
 
+    public function getArtworkDueAtAttribute() {
+        return $this->due_at ? $this->due_at->copy()->subDays($this->production_days) : null;
+    }
+
+    public function getWeekdaysRemainingAttribute() {
+
+        if (!$this->artwork_due_at)
+            return null;
+
+        $now = Carbon::now();
+
+        return $now->diffInDaysFiltered(function ($dt) {
+            return $dt->isWeekday();
+        }, $this->artwork_due_at, false);
+    }
+
     public function getStatusAttribute() {
 
         if ($this->closed_at) {
             return [
-                'name'       => 'Closed',
-                'short_name' => 'Closed',
-                'color'      => '#adadad',
-                'text_color' => '#fff',
-                'sort'       => 7,
+                'name' => 'Closed',
+                'slug' => 'closed',
+                'sort' => 7,
             ];
         }
+
         if ($this->ordered_at) {
             return [
-                'name'       => 'Ordered (ETA ' . $this->ordered_at->addDays($this->production_days)->format('n/j') . ')',
-                'short_name' => 'ordered',
-                'color'      => '#129af8',
-                'text_color' => '#fff',
-                'sort'       => 5,
+                'name'        => 'Ordered',
+                'description' => 'Ordered (ETA ' . $this->ordered_at->addDays($this->production_days)->format('n/j') . ')',
+                'slug'        => 'ordered',
+                'sort'        => 5,
             ];
         }
+
         if ($this->on_hold_until && $this->on_hold_until->isFuture()) {
             return [
-                'name'       => 'On Hold Until ' . $this->on_hold_until->diffForHumans(),
-                'short_name' => 'On Hold',
-                'color'      => '#f8d512',
-                'text_color' => '#fff',
-                'sort'       => 4,
+                'name'        => 'On Hold',
+                'description' => 'On Hold Until ' . $this->on_hold_until->diffForHumans(),
+                'slug'        => 'onHold',
+                'sort'        => 4,
             ];
         }
-        if ($this->approved_at) {
-            return [
-                'name'       => 'Approved',
-                'short_name' => 'Approved',
-                'color'      => '#22f812',
-                'text_color' => '#fff',
-                'sort'       => 2,
-            ];
-        }
+
         if ($this->is_backlog) {
             return [
-                'name'       => 'Backlogged',
-                'short_name' => 'Backlogged',
-                'color'      => '#adadad',
-                'text_color' => '#fff',
-                'sort'       => 6,
+                'name' => 'Backlogged',
+                'slug' => 'backlog',
+                'sort' => 6,
+            ];
+        }
+
+        if ($this->artwork_due_at && $this->artwork_due_at->isPast()) {
+            return [
+                'name' => 'Overdue',
+                'slug' => 'overdue',
+                'sort' => 1,
             ];
         }
 
         if ($this->incomplete_tasks()->get()->count()) {
             return [
-                'name'       => 'Active',
-                'short_name' => 'Active',
-                'color'      => '#ccc',
-                'text_color' => '#fff',
-                'sort'       => 3,
+                'name' => 'Active',
+                'slug' => 'active',
+                'sort' => 3,
             ];
         }
 
         return [
-            'name'       => 'Idle',
-            'short_name' => 'Idle',
-            'color'      => '#f85e12',
-            'text_color' => '#fff',
-            'sort'       => 1,
+            'name' => 'Idle',
+            'slug' => 'idle',
+            'sort' => 2,
         ];
 
     }
@@ -327,7 +351,7 @@ class Project extends Model {
 
         $production_days = (int)$this->production_days;
 
-        if ($this->getIsPurchase() && $last_task = $this->timeline_tasks()->where('type', '=', 'purchase')->first()) {
+        if ($this->is_purchase && $last_task = $this->timeline_tasks()->where('type', '=', 'purchase')->first()) {
             $last_task_end = $last_task->timeline_date;
         }
 

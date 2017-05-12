@@ -21,4 +21,4 @@ Route::post('/auth/token-login', 'Auth\LoginController@token_login');
 Route::post('/auth/reset-password', ['uses' => 'Auth\ResetPasswordController@reset', 'middleware' => ['jwt.auth']]);
 
 /** @noinspection PhpVoidFunctionResultUsedInspection */
-Route::get('{path?}', 'Controller@index')->where('path', '.+');
+Route::get('{path?}', 'Controller@layout')->where('path', '.+');

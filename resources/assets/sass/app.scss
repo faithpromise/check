@@ -18,3 +18,141 @@
 //
 //
 @import "components/components";
+
+.Projects-divider,
+.Projects-list {
+  margin: 2em 0;
+}
+
+.ProjectItem {
+  font-size: calc-em(14px);
+}
+
+@media (max-width: calc-em(512px)) {
+
+  .ProjectItem {
+    padding:       calc-em(16px, 14px) 0;
+    border-bottom: 1px solid $divider-color;
+
+    &:first-child {
+      border-top: 1px solid $divider-color;
+    }
+
+  }
+
+  .ProjectItem-name {
+    display:     block;
+    font-weight: 700;
+  }
+
+  .ProjectItem-status {
+    display:         flex;
+    justify-content: space-between;
+  }
+
+}
+
+@media (min-width: calc-em(513px)) {
+
+  .ProjectItem {
+    display:         flex;
+    justify-content: space-between;
+    margin-top:      -1px;
+    padding:         calc-em(16px, 14px);
+    border:          1px solid $divider-color;
+    cursor:          pointer;
+
+    &:hover {
+      background-color: $color-gray-lightest;
+    }
+  }
+
+  .ProjectItem-name {
+    font-weight: 700;
+  }
+
+  .ProjectItem-department:after {
+    content: ' / ';
+  }
+
+  //.ProjectItem-from {
+  //  width: calc-em(180px, 14px);
+  //}
+
+  .ProjectItem-status {
+    display:         flex;
+    justify-content: space-between;
+    align-items:     center;
+    //width:           calc-em(170px, 14px);
+    white-space:     nowrap;
+  }
+
+  .ProjectItem-due {
+    padding-right: 1em;
+  }
+
+}
+
+.Item {
+  display:     flex;
+  align-items: center;
+}
+
+.Item-image {
+  font-size: 0; // Remove white space
+
+  > img {
+    font-size:     1rem;
+    width:         3em;
+    margin-right:  1rem;
+    border-radius: 4px;
+  }
+}
+
+.Item-header {
+  font-weight: 700;
+}
+
+.ProjectStatus {
+  display:        inline-block;
+  min-width:      3em;
+  font-size:      .6875rem;
+  padding:        .454545455em .909090909em;
+  border-radius:  3px;
+  text-align:     center;
+  font-weight:    700;
+
+  line-height:    1;
+  vertical-align: baseline;
+
+  &--closed {
+    background-color: #adadad;
+    color:            #fff;
+  }
+
+  &--ordered {
+    background-color: #129af8;
+    color:            #fff;
+  }
+
+  &--backlog {
+    background-color: #adadad;
+    color:            #fff;
+  }
+
+  &--active {
+    background-color: #ccc;
+    color:            #fff;
+  }
+
+  &--idle {
+    background-color: #f85e12;
+    color:            #fff;
+  }
+
+  &--overdue {
+    background-color: #f81212;
+    color:            #fff;
+  }
+
+}

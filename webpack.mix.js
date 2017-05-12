@@ -13,6 +13,7 @@ const { mix } = require('laravel-mix');
 
 mix.webpackConfig({
     externals: {
+        'lodash':       '_',
         'axios':        'axios',
         'vue':          'Vue',
         'vuex':         'Vuex',

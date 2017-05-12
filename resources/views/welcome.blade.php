@@ -7,8 +7,11 @@ $js_url = 'js/app.js';
 $css_url = 'css/app.css';
 
 $scripts = [
+    '//cdnjs.cloudflare.com/ajax/libs/lodash.js/4.17.4/lodash' . ($is_production ? '.min.js' : '.js'),
     '//cdn.rawgit.com/taylorhakes/promise-polyfill/master/promise.js',
     'https://unpkg.com/axios@0.16.0/dist/axios' . ($is_production ? '.min.js' : '.js'),
+    '//cdnjs.cloudflare.com/ajax/libs/moment.js/2.18.1/moment' . ($is_production ? '.min.js' : '.js'),
+    '//cdn.rawgit.com/leonardosantos/momentjs-business/cb4ddf2a/momentjs-business.js',
     '//cdnjs.cloudflare.com/ajax/libs/vue/2.2.6/vue' . ($is_production ? '.min.js' : '.js'),
     '//cdnjs.cloudflare.com/ajax/libs/vue-router/2.3.1/vue-router' . ($is_production ? '.min.js' : '.js'),
     '//cdnjs.cloudflare.com/ajax/libs/vuex/2.2.1/vuex' . ($is_production ? '.min.js' : '.js'),
