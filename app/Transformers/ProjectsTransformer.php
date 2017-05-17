@@ -10,12 +10,14 @@ class ProjectsTransformer extends TransformerAbstract {
     protected $availableIncludes = [
         'requester',
         'agent',
+        'comments',
+        'recipients',
     ];
 
-    protected $defaultIncludes = [
-        'requester',
-        'agent',
-    ];
+//    protected $defaultIncludes = [
+//        'requester',
+//        'agent',
+//    ];
 
     public function transform(Project $project) {
         return [
@@ -41,6 +43,14 @@ class ProjectsTransformer extends TransformerAbstract {
 
     public function includeAgent(Project $project) {
         return $this->item($project->agent, new UserTransformer);
+    }
+
+    public function includeComments(Project $project) {
+        return $this->collection($project->comments, new CommentTransformer);
+    }
+
+    public function includeRecipients(Project $project) {
+        return $this->collection($project->recipients, new UserTransformer);
     }
 
 }

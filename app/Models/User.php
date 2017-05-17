@@ -30,6 +30,10 @@ class User extends Authenticatable {
         return $this->belongsToMany(Comment::class, 'comment_recipients');
     }
 
+    public function projects() {
+        return $this->hasMany(Project::class, 'requester_id');
+    }
+
     /*
     |--------------------------------------------------------------------------
     | Accessors

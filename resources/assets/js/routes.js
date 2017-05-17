@@ -4,6 +4,7 @@ import projects from './projects/route-projects.vue';
 import store from './vuex/store';
 import auth from './auth/auth';
 import auth_routes from './auth/auth.routes';
+import people_routes from './people/people.routes';
 import projects_routes from './projects/projects.routes';
 
 let placeholder = { template: '<div>Placeholder</div>' };
@@ -14,10 +15,9 @@ const routes = [
         component: defaultLayout,
         children:  [
                        { name: 'home', path: '', component: projects },
-                       { name: 'people', path: '/people', component: placeholder },
                        { name: 'settings', path: '/settings', component: placeholder },
                        { name: 'profile', path: '/profile', component: placeholder },
-                   ].concat(projects_routes)
+                   ].concat(projects_routes, people_routes)
     },
 
 ].concat(auth_routes);

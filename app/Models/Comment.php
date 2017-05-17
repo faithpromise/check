@@ -15,6 +15,7 @@ class Comment extends Model {
     use SoftDeletes;
 
     protected $table = 'comments';
+    protected $dates = ['sent_at','created_at', 'updated_at', 'deleted_at'];
     public $fillable = ['event_id', 'project_id', 'user_id', 'type', 'body'];
     public $appends = ['html_body'];
 

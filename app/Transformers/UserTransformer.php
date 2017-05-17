@@ -12,7 +12,8 @@ class UserTransformer extends TransformerAbstract {
     ];
 
     public function transform(User $user) {
-        return [
+
+        $data = [
             'id'           => $user->id,
             'name'         => $user->name,
             'first_name'   => $user->first_name,
@@ -23,6 +24,11 @@ class UserTransformer extends TransformerAbstract {
             'initials'     => $user->initials,
             'avatar_url'   => $user->avatar_url,
         ];
+
+        if (isset($user->projects_count))
+            $data['projects_count'] = $user->projects_count;
+
+        return $data;
     }
 
     public function includeDepartment(User $user) {

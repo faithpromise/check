@@ -2,8 +2,8 @@ import axios from 'axios';
 
 export default {
 
-    all() {
-        return axios.get('/api/agents');
+    all(include) {
+        return axios.get('/api/agents' + (include ? '?include=' + include : ''));
     },
 
 }

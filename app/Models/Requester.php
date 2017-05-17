@@ -12,8 +12,8 @@ class Requester extends User {
     |--------------------------------------------------------------------------
     */
 
-    public function projects() {
-        return $this->hasMany(Project::class);
-    }
+//    public function projects() {
+//        return $this->hasMany(Project::class);
+//    }
 
 }

@@ -2,34 +2,35 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Agent;
-use App\Transformers\AgentTransformer;
+use App\Models\User;
+use App\Transformers\UserTransformer;
 use Illuminate\Http\Request;
 
-use Illuminate\Support\Facades\Auth;
-
-class AgentsController extends Controller {
+class UsersController extends Controller {
 
     public function index(Request $request) {
 
-        $agents = Agent::query();
-
-        // TODO: Limit agents to those within the current user's team/department
+        $query = User::orderBy('first_name')->orderBy('last_name');
 
         $includes = explode(',', $request->get('include'));
 
-        $result = $agents->get();
+        if (in_array('projectCount', $includes)) {
+            $query->withCount('projects');
+            $key = array_search('projectCount', $includes);
+            array_splice($includes, $key, 1);
+        }
+
+        $users = $query->get();
 
         if (!empty($includes))
-            $result->load($includes);
+            $users->load($includes);
 
-        $data = fractal($result, new AgentTransformer());
+        $data = fractal($users, new UserTransformer());
 
-        if ($request->has('include'))
-            $data->parseIncludes($request->get('include'));
+        if (!empty($includes))
+            $data->parseIncludes(implode(',', $includes));
 
         return $data->respond();
-
     }
 
     /**
@@ -58,6 +59,10 @@ class AgentsController extends Controller {
      * @return \Illuminate\Http\Response
      */
     public function show($id) {
+
+        $user = User::find($id);
+
+        return fractal($user, new UserTransformer)->respond();
 
     }
 

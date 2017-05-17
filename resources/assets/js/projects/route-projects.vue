@@ -1,6 +1,6 @@
 <template>
 
-  <div class="Content">
+  <div class="Content Content--flush">
     <div class="Content-container">
 
       <div v-for="agent in agents">

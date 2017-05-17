@@ -1,0 +1,49 @@
+.NewComment {
+  @extend .Comment;
+}
+
+.NewComment-header {
+  @extend .Comment-header;
+}
+
+.NewComment-avatar {
+  @extend .Comment-avatar;
+}
+
+.NewComment-recipients {
+  flex-grow: 1;
+}
+
+.NewComment-body {
+  @extend .Comment-body;
+  border:           1px solid $color-gray-light;
+  background-color: #fff;
+
+  &.has-focus {
+    border-color: $anchor-color;
+    &:before {
+      border-bottom-color: $anchor-color;
+    }
+  }
+
+  &:after {
+    border-bottom-color: #fff;
+  }
+
+  &:before {
+    border-bottom-color: $color-gray-light;
+  }
+
+  > textarea {
+    width:            100%;
+    padding:          0;
+    border:           none;
+    background-color: transparent;
+    resize:           vertical !important;
+
+    &:focus {
+      outline: none !important;
+    }
+  }
+
+}

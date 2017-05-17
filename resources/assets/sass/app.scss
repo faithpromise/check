@@ -19,24 +19,103 @@
 //
 @import "components/components";
 
+/**
+ ************************************************
+ ************************************************
+ ************************************************
+ */
+
+.Tab-list {
+  @extend %list-unstyled;
+  display:       flex;
+  align-items:   flex-end;
+  padding:       0 $Container-padding-h;
+  border-bottom: 1px solid $divider-color;
+}
+
+.Tab-item {
+  padding-left: 2em;
+
+  &:first-child {
+    padding-left: 0;
+  }
+}
+
+.Tab-link {
+  @include link-colors($color-gray-dark, $anchor-color, $color-gray-dark, $color-gray-dark, $color-gray-dark);
+  position: relative;
+  display:  block;
+  padding:  1em 0;
+  //font-weight:    700;
+
+  &:hover {
+    text-decoration: none;
+  }
+
+  &.router-link-active {
+    @include link-colors-all($anchor-color);
+  }
+
+  &:before {
+    content:          '';
+    position:         absolute;
+    bottom:           0;
+    left:             0;
+    right:            0;
+    height:           .25em;
+    background-color: transparent;
+  }
+
+  &.router-link-active:before {
+    background-color: $anchor-color;
+  }
+
+}
+
+.UserItem {
+  @include link-colors-all($root-text-color);
+  display:    block;
+  margin-top: -1px;
+  padding:    1em;
+  border:     1px solid $divider-color;
+  color:      $color-gray-darker;
+  cursor:     pointer;
+
+  &:hover {
+    background-color: $color-gray-lightest;
+    text-decoration:  none;
+  }
+}
+
+.UserItem-name {
+  font-weight: 700;
+}
+
+.UserItem-department {
+  font-size: calc-em(14px);
+}
+
 .Projects-divider,
 .Projects-list {
   margin: 2em 0;
 }
 
 .ProjectItem {
-  font-size: calc-em(14px);
+  @include link-colors-all($root-text-color);
+  margin-top:    -1px;
+  border-bottom: 1px solid $divider-color;
+  border-top:    1px solid $divider-color;
+  font-size:     calc-em(14px);
+
+  &:hover {
+    text-decoration: none;
+  }
 }
 
 @media (max-width: calc-em(512px)) {
 
   .ProjectItem {
-    padding:       calc-em(16px, 14px) 0;
-    border-bottom: 1px solid $divider-color;
-
-    &:first-child {
-      border-top: 1px solid $divider-color;
-    }
+    padding: calc-em(16px, 14px) 0;
 
   }
 
@@ -57,9 +136,8 @@
   .ProjectItem {
     display:         flex;
     justify-content: space-between;
-    margin-top:      -1px;
     padding:         calc-em(16px, 14px);
-    border:          1px solid $divider-color;
+    //border:          1px solid $divider-color;
     cursor:          pointer;
 
     &:hover {

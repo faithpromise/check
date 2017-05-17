@@ -1,0 +1,67 @@
+
+.MultiUserPicker {
+  display:     flex;
+  align-items: center;
+}
+
+.MultiUserPicker-user {
+  margin:        0 0 0 calc-em(8px, 12px);
+  padding:       calc-em(6px, 12px) calc-em(10px, 12px);
+  border-radius: 4px;
+  font-size:     calc-em(12px);
+  white-space:   nowrap;
+  background:    #cde1f4;
+  cursor:        pointer;
+
+  &:hover {
+    text-decoration: line-through;
+  }
+}
+
+.MultiUserPicker-adder {
+  position:    relative;
+  margin-left: calc-em(8px);
+}
+
+.MultiUserPicker-menu {
+  @extend %list-unstyled;
+  position:         absolute;
+  z-index:          99;
+  left:             0;
+  top:              100%;
+  min-width:        calc-em(200px);
+  border:           1px solid $color-gray;
+  background-color: #fff;
+}
+
+.MultiUserPicker-item {
+  display:     flex;
+  align-items: center;
+  padding:     .5em;
+  user-select: none;
+  cursor:      pointer;
+
+  &:hover {
+    background-color: $color-gray-lighter;
+  }
+}
+
+.MultiUserPicker-avatar {
+  height:       2.5em;
+  width:        2.5em;
+  margin-right: .5em;
+}
+
+.MultiUserPicker-name {
+  font-size: calc-em(14px);
+}
+
+.MultiUserPicker-input {
+  border:    none;
+  font-size: calc-em(13px);
+  padding:   calc-em(6px, 13px) calc-em(10px, 13px);
+
+  &:focus {
+    outline: none !important;
+  }
+}

@@ -1,6 +1,5 @@
 <?php
 
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -15,4 +14,7 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/projects', 'ProjectsController@index');
+Route::get('/projects/{id}', 'ProjectsController@show');
 Route::get('/agents', 'AgentsController@index');
+Route::get('/users', 'UsersController@index');
+Route::get('/users/{id}', 'UsersController@show');

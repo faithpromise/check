@@ -17,33 +17,50 @@ class ProjectsController extends Controller {
 
     public function index(Request $request) {
 
-        /** @var User $user */
-        $user = JWTAuth::parseToken()->authenticate();
+        $projects = Project::query();
 
-        // TODO: Only get agents within the current user's team/department
-        $agents = Agent::with('projects')->get();
+        if ($request->has('requester_id'))
+            $projects->where('requester_id', '=', $request->get('requester_id'));
 
-        dd($agents);
+        $result = $projects->get();
 
+        $result = $result->sortBy(function ($project) {
+            return $project->status['sort'] . ($project->due_at ? ' ' . $project->due_at->timestamp : '');
+        });
 
+        if ($request->has('include'))
+            $result->load(explode(',', $request->get('include')));
 
+        $data = fractal($result, new ProjectsTransformer);
 
-        $projects = Project::with('requester')->with('agent.department')->whereIn('agent_id', $agents->pluck('id'))->get();
-//        $group_by = $request->input('group_by', 'agent');
-
-        $data = fractal($projects, new ProjectsTransformer());
+        if ($request->has('include'))
+            $data->parseIncludes($request->get('include'));
 
         return $data->respond();
 
     }
 
-//    public function show($id) {
-//
+    public function show($id, Request $request) {
+
+        $query = Project::where('id', '=', $id);
+
+        if ($request->has('include'))
+            $query->with(explode(',', $request->get('include')));
+
+        $project = $query->first();
+
+        $data = fractal($project, new ProjectsTransformer);
+
+        if ($request->has('include'))
+            $data->parseIncludes($request->get('include'));
+
+        return $data->respond();
+
 //        return [
 //            'data' => Project::with('event', 'agent', 'requester', 'recipients')->whereId($id)->first()
 //        ];
-//
-//    }
+
+    }
 
 //    public function store(Request $request) {
 //        $project = new Project();
