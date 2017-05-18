@@ -4,23 +4,29 @@
   align-items: center;
 }
 
-.MultiUserPicker-user {
-  margin:        0 0 0 calc-em(8px, 12px);
-  padding:       calc-em(6px, 12px) calc-em(10px, 12px);
-  border-radius: 4px;
-  font-size:     calc-em(12px);
-  white-space:   nowrap;
-  background:    #cde1f4;
-  cursor:        pointer;
+.MultiUserPicker-recipient {
+  display:          inline-block;
+  margin:           0 calc-em(8px, 12px) 0 0;
+  padding:          calc-em(6px, 12px) calc-em(10px, 12px);
+  border-radius:    4px;
+  font-size:        calc-em(12px);
+  white-space:      nowrap;
+  background-color: #cde1f4;
+  cursor:           pointer;
 
   &:hover {
     text-decoration: line-through;
   }
+
+  .is-deleting-last-recipient > &:last-child {
+    background-color: #f4cdcd;
+    text-decoration:  line-through;
+  }
+
 }
 
 .MultiUserPicker-adder {
-  position:    relative;
-  margin-left: calc-em(8px);
+  position: relative;
 }
 
 .MultiUserPicker-menu {
@@ -41,7 +47,7 @@
   user-select: none;
   cursor:      pointer;
 
-  &:hover {
+  &.is-focused {
     background-color: $color-gray-lighter;
   }
 }

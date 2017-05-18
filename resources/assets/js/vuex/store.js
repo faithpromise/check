@@ -1,7 +1,8 @@
 import Vuex from 'vuex';
 
 const state = {
-    flash_message:       null,
+    flash_message: null,
+    users:         null,
 };
 
 const mutations = {
@@ -9,6 +10,10 @@ const mutations = {
     insert_flash(state, payload) {
         state.flash_message = payload;
     },
+
+    all_users(state, payload) {
+        state.users = payload;
+    }
 
 };
 

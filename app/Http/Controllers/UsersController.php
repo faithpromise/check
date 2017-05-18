@@ -22,12 +22,12 @@ class UsersController extends Controller {
 
         $users = $query->get();
 
-        if (!empty($includes))
+        if ($request->has('include'))
             $users->load($includes);
 
         $data = fractal($users, new UserTransformer());
 
-        if (!empty($includes))
+        if ($request->has('include'))
             $data->parseIncludes(implode(',', $includes));
 
         return $data->respond();

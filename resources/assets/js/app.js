@@ -5,6 +5,8 @@ import axios from 'axios';
 import VueHead from 'vue-head';
 import VueMoment from 'vue-moment';
 
+import usersService from './people/users.service';
+
 /**
  * Send token with each request
  */
@@ -22,4 +24,9 @@ new Vue({
     store,
     router,
     el: '#app',
+    beforeCreate() {
+        usersService.all().then((result) => {
+            store.commit('all_users', result.data.data);
+        });
+    }
 });

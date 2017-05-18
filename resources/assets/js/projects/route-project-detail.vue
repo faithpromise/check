@@ -10,7 +10,7 @@
 
       <div class="Content-container">
 
-        <new-comment v-bind:recipients="project.recipients.data"></new-comment>
+        <new-comment v-bind:default-recipients="project.recipients.data"></new-comment>
 
         <div class="Comment" v-for="comment in project.comments.data">
           <div class="Comment-header">
