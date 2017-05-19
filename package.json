@@ -21,6 +21,7 @@
   },
   "dependencies": {
     "jwt-decode": "^2.2.0",
+    "laravel-echo": "^1.3.0",
     "vue-moment": "github:brockpetrie/vue-moment"
   }
 }

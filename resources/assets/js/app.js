@@ -8,6 +8,12 @@ import VueMoment from 'vue-moment';
 import usersService from './people/users.service';
 
 /**
+ * Set up Echo for real time updates
+ */
+import Echo from "laravel-echo"
+window.Echo = new Echo(window.app.echo);
+
+/**
  * Send token with each request
  */
 axios.defaults.headers.common['Authorization'] = 'Bearer ' + localStorage.getItem('id_token');

@@ -11,6 +11,7 @@ $scripts = [
     '//cdn.rawgit.com/taylorhakes/promise-polyfill/master/promise.js',
     'https://unpkg.com/axios@0.16.0/dist/axios' . ($is_production ? '.min.js' : '.js'),
     '//cdnjs.cloudflare.com/ajax/libs/moment.js/2.18.1/moment' . ($is_production ? '.min.js' : '.js'),
+    '//cdnjs.cloudflare.com/ajax/libs/pusher/4.1.0/pusher' . ($is_production ? '.min.js' : '.js'),
     '//cdn.rawgit.com/leonardosantos/momentjs-business/cb4ddf2a/momentjs-business.js',
     '//cdnjs.cloudflare.com/ajax/libs/vue/2.2.6/vue' . ($is_production ? '.min.js' : '.js'),
     '//cdnjs.cloudflare.com/ajax/libs/vue-router/2.3.1/vue-router' . ($is_production ? '.min.js' : '.js'),
@@ -31,7 +32,16 @@ $scripts = [
         <link rel="stylesheet" href="{{ $is_production ? mix($css_url) : '/' . $css_url }}">
 
         <!-- CSRF -->
-        <script>window.Laravel = {!! json_encode(['csrfToken' => csrf_token()]) !!};</script>
+        <script>
+            window.Laravel = {!! json_encode(['csrfToken' => csrf_token()]) !!};
+            window.app     = {
+                echo: {
+                    broadcaster: 'pusher',
+                    key: {!! json_encode(config('broadcasting.connections.pusher.key')) !!},
+                    cluster: {!! json_encode(config('broadcasting.connections.pusher.options.cluster')) !!}
+                }
+            };
+        </script>
     </head>
     <body>
 
