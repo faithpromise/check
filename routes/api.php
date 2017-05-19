@@ -18,3 +18,14 @@ Route::get('/projects/{id}', 'ProjectsController@show');
 Route::get('/agents', 'AgentsController@index');
 Route::get('/users', 'UsersController@index');
 Route::get('/users/{id}', 'UsersController@show');
+
+// Comments
+
+Route::post('/comments', 'CommentsController@store');
+Route::put('/comments/{id}', 'CommentsController@update');
+
+// Attachments
+Route::get('/attachments/{id}/thumb.{ext}', 'AttachmentsController@thumb');
+Route::post('/attachments', 'AttachmentsController@store');
+Route::delete('/attachments/{id}', 'AttachmentsController@destroy');
+
