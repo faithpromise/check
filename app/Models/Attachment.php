@@ -29,7 +29,7 @@ class Attachment extends Model {
             return url('/api/attachments/' . $this->id . '/thumb.' . $this->extension);
         }
 
-        return url('/build/images/document.png');
+        return url('/images/document.png');
     }
 
     public function getDownloadUrlAttribute() {
@@ -42,7 +42,7 @@ class Attachment extends Model {
     }
 
     public function getPathAttribute() {
-        return storage_path('attachments/' . $this->file_name);
+        return storage_path('app/attachments/' . $this->file_name);
     }
 
     public function setCommentId($param) {
