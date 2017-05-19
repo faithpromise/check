@@ -10,24 +10,16 @@
 
       <div class="Content-container">
 
-        <new-comment v-bind:default-recipients="project.recipients.data"></new-comment>
+        <new-comment
+                v-bind:project-id="project.id"
+                v-bind:default-recipients="project.recipients.data">
+        </new-comment>
 
-        <div class="Comment" v-for="comment in project.comments.data">
-          <div class="Comment-header">
-            <div class="Comment-avatar">
-              <img v-bind:src="comment.sender.data.avatar_url">
-            </div>
-            <div class="Comment-meta">
-              <div class="Comment-sender">{{ comment.sender.data.name }}</div>
-              <div class="Comment-date">{{ comment.sent_at | moment('from', 'now') }}</div>
-              <div class="Comment-recipients" v-if="comment.recipients.data.length">
-                <span>&middot;</span>
-                <span class="Comment-recipient" v-for="recipient in comment.recipients.data" :key="recipient.id">{{ recipient.name }}</span>
-              </div>
-            </div>
-          </div>
-          <div class="Comment-body" v-bind:class="{ 'is-internal': comment.recipients.data.length === 0 }" v-html="comment.body"></div>
-        </div>
+        <comments
+                v-bind:project-id="project.id"
+                v-bind:comments="project.comments.data">
+        </comments>
+
       </div>
 
     </div>
@@ -40,6 +32,7 @@
     import projectService from './projects.service';
     import pageHeader from '../../sunday-morning/admin/js/components/page-header.vue';
     import newComment from '../comments/new-comment.vue';
+    import comments from '../comments/comments.vue';
 
     export default {
 
@@ -55,28 +48,43 @@
 
         },
 
-        props: {},
-
         components: {
             pageHeader,
             newComment,
+            comments,
         },
 
         data() {
             return {
-                project:                 null,
+                project:      null,
+                is_listening: false,
             }
         },
 
-        computed: {},
-
-        created() {
-
+        watch: {
+            project() {
+                this.listen();
+            }
         },
 
-        methods: {
+        beforeDestroy() {
+            this.leave();
+        },
 
-        }
+        listen() {
+            if (this.project && !this.is_listening) {
+                this.is_listening = true;
+                Echo
+                    .channel('project.' + this.project.id)
+                    .listen('CommentsAdded', (e) => {
+                        console.log(e.update);
+                    });
+            }
+        },
+
+        leave() {
+            Echo.leave('project.' + this.project.id);
+        },
 
     }
 </script>
