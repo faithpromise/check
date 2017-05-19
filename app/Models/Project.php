@@ -80,8 +80,8 @@ class Project extends Model {
         return $this->hasMany(Comment::class)->orderBy('created_at', 'desc');
     }
 
-    public function files() {
-        return $this->hasManyThrough(File::class, Comment::class);
+    public function attachments() {
+        return $this->hasManyThrough(Attachment::class, Comment::class);
     }
 
     public function recipients() {
