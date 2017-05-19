@@ -12,6 +12,8 @@
   font-size:        calc-em(12px);
   white-space:      nowrap;
   background-color: #cde1f4;
+  color:            darken(#cde1f4, 70%);
+  user-select:      none;
   cursor:           pointer;
 
   &:hover {
@@ -20,6 +22,7 @@
 
   .is-deleting-last-recipient > &:last-child {
     background-color: #f4cdcd;
+    color:            darken(#f4cdcd, 70%);
     text-decoration:  line-through;
   }
 
@@ -63,9 +66,11 @@
 }
 
 .MultiUserPicker-input {
-  border:    none;
-  font-size: calc-em(13px);
-  padding:   calc-em(6px, 13px) calc-em(10px, 13px);
+  border:     none;
+  font-size:  calc-em(13px);
+  padding:    calc-em(6px, 13px) calc-em(10px, 13px);
+  background: transparent;
+  color:      inherit;
 
   &:focus {
     outline: none !important;

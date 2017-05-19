@@ -25,6 +25,27 @@
  ************************************************
  */
 
+.Attachment-item {
+  display:      inline-block;
+  margin-right: .5em;
+  user-select:  none;
+  cursor:       pointer;
+
+  &:hover > .Attachment-name {
+    text-decoration: line-through;
+  }
+}
+
+.Attachment-thumb {
+  height:         1.5em;
+  width:          1.5em;
+  vertical-align: middle;
+}
+
+.Attachment-name {
+  font-size: calc-em(11px);
+}
+
 .Tab-list {
   @extend %list-unstyled;
   display:       flex;
