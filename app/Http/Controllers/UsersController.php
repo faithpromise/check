@@ -2,11 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use App\Events\UserSaved;
 use App\Models\User;
 use App\Transformers\UserTransformer;
 use Illuminate\Http\Request;
 
 class UsersController extends Controller {
+
 
     public function index(Request $request) {
 
@@ -38,8 +40,17 @@ class UsersController extends Controller {
      *
      * @return \Illuminate\Http\Response
      */
-    public function create() {
-        //
+    public function create(Request $request) {
+
+        User::unguard();
+
+        $user = new User();
+        $user->fill($request->only($user->getFillable()))->save();
+
+        event(new UserSaved($user));
+
+        return fractal($user, new UserTransformer)->respond();
+
     }
 
     /**
@@ -67,16 +78,6 @@ class UsersController extends Controller {
     }
 
     /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id) {
-        //
-    }
-
-    /**
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request $request
@@ -84,7 +85,14 @@ class UsersController extends Controller {
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, $id) {
-        //
+
+        $user = User::find($id);
+        $user->fill($request->only($user->getFillable()))->save();
+
+        event(new UserSaved($user));
+
+        return fractal($user, new UserTransformer)->respond();
+
     }
 
     /**

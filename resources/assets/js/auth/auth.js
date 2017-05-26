@@ -1,5 +1,16 @@
 import jwtDecode from 'jwt-decode';
 import authService from './auth.service';
+import axios from 'axios';
+
+/**
+ * Send token with each request
+ */
+axios.interceptors.request.use((config) => {
+    let token = get_local_token();
+    if (token)
+        config.headers.Authorization = 'Bearer ' + token;
+    return config;
+});
 
 export default {
 
@@ -41,7 +52,7 @@ export default {
     get_seconds_until_logout() {
         let jwtStr = get_local_token();
         try {
-            let token = jwtDecode(jwtStr);
+            let token             = jwtDecode(jwtStr);
             let time_diff         = localStorage.getItem('server_time_diff');
             let seconds_remaining = (typeof jwtStr === 'string') ? (token.exp - time_diff - Date.now() / 1000) : 0;
             return Math.round(Math.max(0, seconds_remaining));

@@ -21,9 +21,9 @@ class CommentTransformer extends TransformerAbstract {
         $data = [
             'id'         => $comment->id,
             'type'       => $comment->type,
-            'body'       => TextFormatter::render($parsed_body),
+            'body'       => $comment->html_body,
             'sent_at'    => $comment->sent_at ? $comment->sent_at->toDateTimeString() : null,
-            'created_at' => $comment->created_at,
+            'created_at' => $comment->created_at->toDateTimeString(),
         ];
 
         return $data;

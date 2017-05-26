@@ -7,12 +7,18 @@ use App\Transformers\AgentTransformer;
 use Illuminate\Http\Request;
 
 use Illuminate\Support\Facades\Auth;
+use Tymon\JWTAuth\Facades\JWTAuth;
 
 class AgentsController extends Controller {
 
     public function index(Request $request) {
 
+        $user = JWTAuth::parseToken()->authenticate();
+
         $agents = Agent::query();
+
+        if ($request->get('order_by') === 'me_on_top')
+            $agents->orderByRaw('users.id = ' . $user->id . ' desc')->orderBy('first_name');
 
         // TODO: Limit agents to those within the current user's team/department
 

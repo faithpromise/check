@@ -21,7 +21,7 @@
       </div>
 
       <div class="ProjectItem-status">
-        <span class="ProjectItem-due">{{ due_string(project.artwork_due_at) }}</span>
+        <span class="ProjectItem-due">{{ project.artwork_due_at | dueFormat }}</span>
         <span class="ProjectStatus" v-bind:class="'ProjectStatus--' + project.status.slug" v-if="project.status.slug !== 'active'">{{ project.status.name }}</span>
       </div>
 
@@ -30,7 +30,7 @@
 </template>
 <script>
 
-    let now_moment = moment();
+    import dueFormat from '../filters/due-format';
 
     export default {
 
@@ -38,17 +38,15 @@
             projects: { required: true }
         },
 
+        filters: {
+            dueFormat
+        },
+
         methods: {
 
             age_string(created) {
                 let created_moment = moment(created);
                 return moment.diff(created_moment)
-            },
-
-            due_string(due) {
-                let due_moment = moment(due);
-                let days       = due_moment.businessDiff(now_moment);
-                return 'Due ' + (days >= 0 && days <= 10 ? 'in ' + days + ' weekdays' : due_moment.fromNow());
             },
 
         }

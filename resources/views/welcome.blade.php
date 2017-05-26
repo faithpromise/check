@@ -30,18 +30,6 @@ $scripts = [
 
         <!-- Styles -->
         <link rel="stylesheet" href="{{ $is_production ? mix($css_url) : '/' . $css_url }}">
-
-        <!-- CSRF -->
-        <script>
-            window.Laravel = {!! json_encode(['csrfToken' => csrf_token()]) !!};
-            window.app     = {
-                echo: {
-                    broadcaster: 'pusher',
-                    key: {!! json_encode(config('broadcasting.connections.pusher.key')) !!},
-                    cluster: {!! json_encode(config('broadcasting.connections.pusher.options.cluster')) !!}
-                }
-            };
-        </script>
     </head>
     <body>
 
@@ -66,7 +54,16 @@ $scripts = [
         @endforeach
 
         <script>
+            Pusher.logToConsole = true;
             NProgress.configure({ showSpinner: false });
+            window.Laravel = {!! json_encode(['csrfToken' => csrf_token()]) !!};
+            window.app     = {
+                echo: {
+                    broadcaster: 'pusher',
+                    key: {!! json_encode(config('broadcasting.connections.pusher.key')) !!},
+                    cluster: {!! json_encode(config('broadcasting.connections.pusher.options.cluster')) !!}
+                }
+            };
         </script>
 
         <script src="{{ $is_production ? mix($js_url) : '/' . $js_url }}"></script>

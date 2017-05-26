@@ -14,11 +14,6 @@ import Echo from "laravel-echo"
 window.Echo = new Echo(window.app.echo);
 
 /**
- * Send token with each request
- */
-axios.defaults.headers.common['Authorization'] = 'Bearer ' + localStorage.getItem('id_token');
-
-/**
  * Bootstrap Vue app
  */
 Vue.prototype.$http = axios;
@@ -29,10 +24,22 @@ Vue.use(VueMoment);
 new Vue({
     store,
     router,
-    el: '#app',
-    beforeCreate() {
-        usersService.all().then((result) => {
-            store.commit('all_users', result.data.data);
-        });
+    el:      '#app',
+    // beforeCreate() {
+    //     usersService.all().then((result) => {
+    //         store.commit('all_users', result.data.data);
+    //     });
+    // },
+    created() {
+        this.update_users();
+        window.Echo.channel('users')
+            .listen('UserSaved', this.update_users);
+    },
+    methods: {
+        update_users() {
+            usersService.all().then((result) => {
+                store.commit('all_users', result.data.data);
+            });
+        },
     }
 });

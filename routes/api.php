@@ -18,6 +18,8 @@ Route::get('/projects/{id}', 'ProjectsController@show');
 Route::get('/agents', 'AgentsController@index');
 Route::get('/users', 'UsersController@index');
 Route::get('/users/{id}', 'UsersController@show');
+Route::post('/users', 'UsersController@create');
+Route::put('/users/{id}', 'UsersController@update');
 
 // Comments
 

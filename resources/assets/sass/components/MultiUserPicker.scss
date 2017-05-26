@@ -47,12 +47,49 @@
   display:     flex;
   align-items: center;
   padding:     .5em;
+  white-space: nowrap;
   user-select: none;
   cursor:      pointer;
 
   &.is-focused {
     background-color: $color-gray-lighter;
   }
+}
+
+.MultiUserPicker-new {
+  position:         absolute;
+  z-index:          99;
+  left:             0;
+  top:              100%;
+  width:            calc-em(300px);
+  padding:          1em 1em 0;
+  border:           1px solid $divider-color;
+  white-space:      nowrap;
+  background-color: #fff;
+
+  > input {
+    display: inline-block;
+    width:   150px;
+    margin:  .5em 0;
+
+    &:nth-child(3) {
+      display: block;
+      width:   100%;
+    }
+  }
+
+  .Field {
+    margin-bottom: .75em;
+  }
+
+}
+
+.MultiUserPicker-newTitle {
+  margin-bottom:  calc-em(16px, 13px);
+  font-size:      calc-em(13px);
+  font-weight:    700;
+  text-transform: uppercase;
+  color:          $color-gray-dark;
 }
 
 .MultiUserPicker-avatar {

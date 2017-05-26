@@ -77,7 +77,7 @@ class Project extends Model {
     }
 
     public function comments() {
-        return $this->hasMany(Comment::class)->orderBy('created_at', 'desc');
+        return $this->hasMany(Comment::class)->published()->orderBy('created_at', 'desc');
     }
 
     public function attachments() {

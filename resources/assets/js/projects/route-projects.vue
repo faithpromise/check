@@ -35,7 +35,7 @@
 
         beforeRouteEnter(to, from, next) {
 
-            projectService.by_agent().then((result) => {
+            projectService.by_agent({ order_by: 'me_on_top' }).then((result) => {
                 next(vm => {
                     vm.agents = result.data.data;
                 });
@@ -51,6 +51,20 @@
             return {
                 agents: [],
             }
+        },
+
+        created() {
+
+
+        },
+
+        methods: {
+
+//            listen() {
+//                Echo.channel('projects')
+//                    .listen('ProjectSaved', this.on_comment_added);
+//            }
+
         },
 
     }

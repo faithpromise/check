@@ -28,9 +28,15 @@
 
 .Comment-date,
 .Comment-recipients {
-  display:   inline-block;
-  font-size: calc-em(13px);
-  color:     $color-gray-dark;
+  display:     inline-block;
+  font-size:   calc-em(13px);
+  color:       $color-gray-dark;
+  user-select: none;
+  cursor:      default;
+}
+
+.Comment-date {
+  cursor: pointer;
 }
 
 .Comment-recipient {

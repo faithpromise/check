@@ -29,11 +29,15 @@
   display:      inline-block;
   margin-right: .5em;
   user-select:  none;
-  cursor:       pointer;
+  cursor:       default;
 
-  &:hover > .Attachment-name {
-    text-decoration: line-through;
+  &.is-new {
+    cursor: pointer;
+    &:hover > .Attachment-name {
+      text-decoration: line-through;
+    }
   }
+
 }
 
 .Attachment-thumb {

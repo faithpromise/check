@@ -24,15 +24,16 @@
               v-model="comment.body"
               v-on:focus="body_has_focus = true"
               v-on:blur="body_has_focus = false"
-              v-on:keydown.enter.meta="save">
+              v-on:keydown.enter.meta="save"
+              required>
       </textarea>
       </div>
       <div class="Comment-attachments">
-        <div class="Attachment-list" s-show="attachments.length">
-      <span class="Attachment-item" v-for="(attachment, index) in attachments" :key="attachment.id" v-on:click="delete_attachment(index)">
-        <img class="Attachment-thumb" v-bind:src="attachment.thumb_url">
-        <span class="Attachment-name">{{ attachment.name }}</span>
-      </span>
+        <div class="Attachment-list" v-show="attachments.length">
+          <div class="Attachment-item is-new" v-for="(attachment, index) in attachments" :key="attachment.id" v-on:click="delete_attachment(index)">
+            <img class="Attachment-thumb" v-bind:src="attachment.thumb_url">
+            <span class="Attachment-name">{{ attachment.name }}</span>
+          </div>
         </div>
       </div>
     </div>
@@ -59,7 +60,7 @@
             return {
                 comment:           {
                     project_id: this.projectId,
-                    body:       'Lorm ipsum means that its really importent for you to stay off drugs and stay in scool. You need to no things that will help you in life. Like MATHS and gym. You don\'t want to be dum.',
+                    body:       '',
                     recipients: this.defaultRecipients.slice(0),
                     type:       'draft',
                 },
@@ -115,6 +116,7 @@
             reset() {
                 this.comment.recipients = this.defaultRecipients.slice(0); // Clone the array. Shallow ok if not changing the values?
                 this.comment.body       = '';
+                this.attachments        = [];
             },
 
             upload_attachments(event) {

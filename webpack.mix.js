@@ -15,6 +15,7 @@ mix.webpackConfig({
     externals: {
         'lodash':       '_',
         'axios':        'axios',
+        'moment':       'moment',
         'pusher':       'Pusher',
         'vue':          'Vue',
         'vuex':         'Vuex',

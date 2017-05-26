@@ -10,8 +10,8 @@ export default {
         return axios.get('/api/projects/' + id, { params: { include: include } });
     },
 
-    by_agent() {
-        return axios.get('/api/agents?include=projects.requester.department');
+    by_agent(params) {
+        return axios.get('/api/agents?include=projects.requester.department', { params });
     },
 
     by_requester(id, include) {

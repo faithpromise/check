@@ -1,28 +1,27 @@
 <template>
 
-  <div v-if="project">
+  <div class="Content" v-if="project">
 
     <page-header>
       <template slot="title">{{ project.name }}</template>
+      <template slot="actions">
+        <button class="Button">Settings</button>
+      </template>
+      <div>requested by {{ project.requester.data.name }} {{ project.created_at | moment('from', 'now') }}</div>
+      <div>due {{ project.artwork_due_at | dueFormat }} <span class="ProjectStatus" v-bind:class="'ProjectStatus--' + project.status.slug" v-if="project.status.slug !== 'active'">{{ project.status.name }}</span></div>
     </page-header>
 
-    <div class="Content Content--flush">
-
-      <div class="Content-container">
-
-        <new-comment
-                v-bind:project-id="project.id"
-                v-bind:default-recipients="project.recipients.data">
-        </new-comment>
-
-        <comments
-                v-bind:project-id="project.id"
-                v-bind:comments="project.comments.data">
-        </comments>
-
-      </div>
-
+    <div class="Project-comment">
+      <new-comment
+              v-bind:project-id="project.id"
+              v-bind:default-recipients="project.recipients.data">
+      </new-comment>
     </div>
+
+    <comments
+            v-bind:project-id="project.id"
+            v-bind:comments="project.comments.data">
+    </comments>
 
   </div>
 
@@ -34,11 +33,13 @@
     import newComment from '../comments/new-comment.vue';
     import comments from '../comments/comments.vue';
 
+    import dueFormat from '../filters/due-format';
+
     export default {
 
         beforeRouteEnter(to, from, next) {
 
-            let projects = projectService.find(to.params.id, 'recipients,requester.department,agent,comments.sender,comments.recipients');
+            let projects = projectService.find(to.params.id, 'recipients,requester.department,agent,comments.sender,comments.recipients,comments.attachments');
 
             projects.then((result) => {
                 next(vm => {
@@ -52,6 +53,10 @@
             pageHeader,
             newComment,
             comments,
+        },
+
+        filters: {
+            dueFormat
         },
 
         data() {
@@ -71,19 +76,27 @@
             this.leave();
         },
 
-        listen() {
-            if (this.project && !this.is_listening) {
-                this.is_listening = true;
-                Echo
-                    .channel('project.' + this.project.id)
-                    .listen('CommentsAdded', (e) => {
-                        console.log(e.update);
-                    });
-            }
-        },
+        methods: {
 
-        leave() {
-            Echo.leave('project.' + this.project.id);
+            listen() {
+
+                if (this.is_listening || !this.project) return;
+
+                this.is_listening = true;
+
+                Echo.channel('project.' + this.project.id)
+                    .listen('CommentCreated', this.on_comment_added);
+
+            },
+
+            leave() {
+                Echo.leave('.project.' + this.project.id);
+            },
+
+            on_comment_added(e) {
+                this.project.comments.data.unshift(e.data);
+            },
+
         },
 
     }

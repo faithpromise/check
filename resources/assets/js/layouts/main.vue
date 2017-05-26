@@ -33,7 +33,7 @@
                     { route: 'home', title: 'Dashboard' },
                     { route: 'projects', title: 'Projects' },
                     { route: 'people', title: 'People' },
-                    { route: 'home', title: 'Files' },
+//                    { route: 'home', title: 'Files' },
                 ],
                 account_nav:     [
                     { route: 'profile', title: 'Profile' },

@@ -4,7 +4,7 @@
       <input
               id="login_email"
               class="Control"
-              type="email"
+              type="text"
               name="email"
               placeholder="email"
               v-model="creds.email"
@@ -29,6 +29,8 @@
 </template>
 <script>
 
+    let remembered_email = localStorage.getItem('user_email');
+
     import auth from './auth';
     import router from '../routes';
 
@@ -46,7 +48,7 @@
                 is_logging_in: false,
                 error_code:    false,
                 creds:         {
-                    email:    localStorage.getItem('user_email'),
+                    email:    remembered_email || ('@' + window.location.hostname),
                     password: '',
                 },
             }
@@ -67,9 +69,10 @@
         mounted() {
 
             // Focus on applicable field
-            let focused_input = this.creds.email ? 'login_password' : 'login_email';
-            document.getElementById(focused_input).focus();
-
+            let focused_input = remembered_email ? 'login_password' : 'login_email';
+            let input_elem    = document.getElementById(focused_input);
+            input_elem.focus();
+            input_elem.setSelectionRange ? input_elem.setSelectionRange(0, 0) : null;
         },
 
         methods: {

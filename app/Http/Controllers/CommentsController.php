@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Events\CommentCreated;
 use App\Models\Comment;
 use App\Transformers\CommentTransformer;
 use Illuminate\Http\Request;
@@ -24,6 +25,9 @@ class CommentsController extends Controller {
 
         $this->update_recipients($comment, $request->get('recipients'));
 
+        if ($comment->is_published)
+            event(new CommentCreated($comment));
+
         return fractal($comment, new CommentTransformer)->respond();
 
     }
@@ -31,10 +35,14 @@ class CommentsController extends Controller {
     public function update($id, Request $request) {
 
         $comment = Comment::find($id);
-        $comment->body = $request->get('body');
+        $comment->body = $request->get('body', $comment->body);
+        $comment->type = $request->get('type', $comment->type);
         $comment->save();
 
         $this->update_recipients($comment, $request->get('recipients'));
+
+        if ($comment->is_published)
+            event(new CommentCreated($comment));
 
         return fractal($comment, new CommentTransformer)->respond();
 

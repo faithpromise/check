@@ -19,6 +19,13 @@
 
 .NewComment {
   @extend .Comment;
+  margin-bottom:    1.5em;
+  background-color: $color-gray-lightest;
+  border-bottom:    1px solid $divider-color;
+}
+
+.NewComment-container {
+  @extend .Container;
 }
 
 .NewComment-header {

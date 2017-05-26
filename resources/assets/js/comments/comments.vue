@@ -1,6 +1,6 @@
 <template>
   <div>
-    <comment v-bind:comment="comment" v-for="comment in comments"></comment>
+    <comment v-bind:comment="comment" v-for="comment in comments" :key="comment.id"></comment>
   </div>
 </template>
 <script>
