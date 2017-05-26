@@ -4,17 +4,16 @@ use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Support\Facades\Schema;
 
-class CreatePasswordResetsTable extends Migration {
+class CreateProjectRecipientsTable extends Migration {
     /**
      * Run the migrations.
      *
      * @return void
      */
     public function up() {
-        Schema::create('password_resets', function (Blueprint $table) {
-            $table->string('email')->index();
-            $table->string('token')->index();
-            $table->timestamp('created_at');
+        Schema::create('project_recipients', function (Blueprint $table) {
+            $table->integer('project_id')->unsigned();
+            $table->integer('user_id')->unsigned();
         });
     }
 
@@ -24,6 +23,6 @@ class CreatePasswordResetsTable extends Migration {
      * @return void
      */
     public function down() {
-        Schema::drop('password_resets');
+        Schema::drop('project_recipients');
     }
 }
