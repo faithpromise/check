@@ -25,6 +25,7 @@
               v-on:focus="body_has_focus = true"
               v-on:blur="body_has_focus = false"
               v-on:keydown.enter.meta="save"
+              v-autosize
               required>
       </textarea>
       </div>
@@ -44,6 +45,7 @@
     import multiUserPicker from '../users/multi-user-picker.vue';
     import attachmentsService from '../attachments/attachments.service';
     import commentsService from '../comments/comments.service';
+    import autosize from '../../sunday-morning/core/js/directives/textarea-autosize';
 
     export default {
 
@@ -54,6 +56,10 @@
 
         components: {
             multiUserPicker,
+        },
+
+        directives: {
+            autosize
         },
 
         data() {
