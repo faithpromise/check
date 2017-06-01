@@ -34,6 +34,7 @@ class ProjectsTransformer extends TransformerAbstract {
             'artwork_due_at'     => $project->due_at ? $project->artwork_due_at->toDateTimeString() : null,
             'weekdays_remaining' => $project->weekdays_remaining,
             'status'             => $project->status,
+            'is_active'          => $project->is_active,
         ];
     }
 
@@ -42,7 +43,10 @@ class ProjectsTransformer extends TransformerAbstract {
     }
 
     public function includeAgent(Project $project) {
-        return $this->item($project->agent, new UserTransformer);
+        if ($project->agent)
+            return $this->item($project->agent, new UserTransformer);
+
+        return null;
     }
 
     public function includeComments(Project $project) {

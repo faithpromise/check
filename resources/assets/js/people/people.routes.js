@@ -1,4 +1,5 @@
 import person from './route-person.vue';
+import edit from './route-person-edit.vue';
 import people from './route-people.vue';
 
 export default [
@@ -11,5 +12,10 @@ export default [
         name:      'person',
         path:      '/people/:id',
         component: person,
+    },
+    {
+        name:      'person_edit',
+        path:      '/people/:id/edit',
+        component: edit,
     },
 ]

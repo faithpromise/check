@@ -7,7 +7,7 @@
       <template slot="actions">
         <button class="Button">Settings</button>
       </template>
-      <div>requested by {{ project.requester.data.name }} {{ project.created_at | moment('from', 'now') }}</div>
+      <div>requested by <router-link v-bind:to="{ name: 'person', params: { id: project.requester.data.id } }">{{ project.requester.data.name }}</router-link> {{ project.created_at | moment('from', 'now') }}</div>
       <div>due {{ project.artwork_due_at | dueFormat }} <span class="ProjectStatus" v-bind:class="'ProjectStatus--' + project.status.slug" v-if="project.status.slug !== 'active'">{{ project.status.name }}</span></div>
     </page-header>
 

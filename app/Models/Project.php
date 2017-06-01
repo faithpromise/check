@@ -53,11 +53,11 @@ class Project extends Model {
     }
 
     public function requester() {
-        return $this->belongsTo(Requester::class, 'requester_id');
+        return $this->belongsTo(Requester::class, 'requester_id')->withTrashed();
     }
 
     public function agent() {
-        return $this->belongsTo(Agent::class, 'agent_id');
+        return $this->belongsTo(Agent::class, 'agent_id')->withTrashed();
     }
 
     public function tasks() {
@@ -94,6 +94,10 @@ class Project extends Model {
     |--------------------------------------------------------------------------
     */
 
+    public function scopeWithInactive($query) {
+        $query->withoutGlobalScope(ActiveProjectScope::class);
+    }
+
     public function scopeActive($query) {
         $query->where('is_backlog', '=', false)
             ->whereNull('closed_at');
@@ -112,6 +116,10 @@ class Project extends Model {
     | Accessors
     |--------------------------------------------------------------------------
     */
+
+    public function getIsActiveAttribute() {
+        return (!$this->closed_at) && (!$this->is_backlog);
+    }
 
     public function getArtworkDueAtAttribute() {
         return $this->due_at ? $this->due_at->copy()->subDays($this->production_days) : null;

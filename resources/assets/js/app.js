@@ -33,11 +33,12 @@ new Vue({
     created() {
         this.update_users();
         window.Echo.channel('users')
-            .listen('UserSaved', this.update_users);
+            .listen('UserSaved', this.update_users)
+            .listen('UserDeleted', this.update_users);
     },
     methods: {
         update_users() {
-            usersService.all().then((result) => {
+            usersService.all('department,projectCount').then((result) => {
                 store.commit('all_users', result.data.data);
             });
         },

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Events\UserDeleted;
 use App\Events\UserSaved;
 use App\Models\User;
 use App\Transformers\UserTransformer;
@@ -69,12 +70,20 @@ class UsersController extends Controller {
      * @param  int $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id) {
+    public function show($id, Request $request) {
 
         $user = User::find($id);
+        $includes = $request->get('include');
 
-        return fractal($user, new UserTransformer)->respond();
+        if ($includes)
+            $user->load(explode(',', $includes));
 
+        $data = fractal($user, new UserTransformer);
+
+        if ($includes)
+            $data->parseIncludes($includes);
+
+        return $data->respond();
     }
 
     /**
@@ -99,9 +108,13 @@ class UsersController extends Controller {
      * Remove the specified resource from storage.
      *
      * @param  int $id
-     * @return \Illuminate\Http\Response
      */
     public function destroy($id) {
-        //
+
+        $user = User::find($id);
+        $user->delete();
+
+        event(new UserDeleted($user));
     }
+
 }

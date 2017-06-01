@@ -18,6 +18,7 @@
     import navMenu from '../../sunday-morning/admin/js/components/nav.vue';
     import flashMessage from '../../sunday-morning/admin/js/components/flash-message.vue';
     import reLogin from '../auth/re-login.vue';
+    import jwtDecode from 'jwt-decode';
 
     export default {
 
@@ -28,16 +29,18 @@
         },
 
         data() {
+
+            let token = jwtDecode(localStorage.getItem('id_token'));
+
             return {
                 nav:             [
-                    { route: 'home', title: 'Dashboard' },
                     { route: 'projects', title: 'Projects' },
                     { route: 'people', title: 'People' },
 //                    { route: 'home', title: 'Files' },
                 ],
                 account_nav:     [
-                    { route: 'profile', title: 'Profile' },
-                    { route: 'settings', title: 'Settings' },
+                    { route: 'person_edit', params: { id: token.sub }, title: 'Profile' },
+//                    { route: 'settings', title: 'Settings' },
                     { route: 'logout', title: 'Sign Out' },
                 ],
                 user_name:       localStorage.getItem('user_name'),

@@ -45,11 +45,11 @@ class Comment extends Model {
     }
 
     public function sender() {
-        return $this->belongsTo(User::class, 'user_id');
+        return $this->belongsTo(User::class, 'user_id')->withTrashed();
     }
 
     public function recipients() {
-        return $this->belongsToMany(User::class, 'comment_recipients', 'comment_id', 'user_id');
+        return $this->belongsToMany(User::class, 'comment_recipients', 'comment_id', 'user_id')->withTrashed();
     }
 
     public function attachments() {

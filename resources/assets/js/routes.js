@@ -1,5 +1,4 @@
 import defaultLayout from './layouts/main.vue';
-import projects from './projects/route-projects.vue';
 
 import store from './vuex/store';
 import auth from './auth/auth';
@@ -14,7 +13,7 @@ const routes = [
         path:      '/',
         component: defaultLayout,
         children:  [
-                       { name: 'home', path: '', component: projects },
+                       { name: 'home', path: '', redirect: { name: 'projects' } },
                        { name: 'settings', path: '/settings', component: placeholder },
                        { name: 'profile', path: '/profile', component: placeholder },
                    ].concat(projects_routes, people_routes)

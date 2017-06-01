@@ -2,25 +2,27 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Agent;
 use App\Models\Project;
-//use Carbon\Carbon;
-use App\Models\User;
 use App\Transformers\ProjectsTransformer;
 use Illuminate\Http\Request;
-use Tymon\JWTAuth\Facades\JWTAuth;
-
-//use App\Http\Requests;
-//use Intervention\Image\Facades\Image;
 
 class ProjectsController extends Controller {
 
     public function index(Request $request) {
 
         $projects = Project::query();
+        $includes = $request->get('include', null) ? explode(',', $request->get('include')) : [];
+
+        // Limit to single requester
 
         if ($request->has('requester_id'))
             $projects->where('requester_id', '=', $request->get('requester_id'));
+
+        // Include inactive projects
+        if (in_array('inactive', $includes)) {
+            $projects->withInactive();
+            $includes = array_diff($includes, ['inactive']);
+        }
 
         $result = $projects->get();
 
@@ -28,13 +30,13 @@ class ProjectsController extends Controller {
             return $project->status['sort'] . ($project->due_at ? ' ' . $project->due_at->timestamp : '');
         });
 
-        if ($request->has('include'))
-            $result->load(explode(',', $request->get('include')));
+        if (!empty($includes))
+            $result->load($includes);
 
         $data = fractal($result, new ProjectsTransformer);
 
-        if ($request->has('include'))
-            $data->parseIncludes($request->get('include'));
+        if (!empty($includes))
+            $data->parseIncludes($includes);
 
         return $data->respond();
 
@@ -42,7 +44,7 @@ class ProjectsController extends Controller {
 
     public function show($id, Request $request) {
 
-        $query = Project::where('id', '=', $id);
+        $query = Project::withInactive()->where('id', '=', $id);
 
         if ($request->has('include'))
             $query->with(explode(',', $request->get('include')));

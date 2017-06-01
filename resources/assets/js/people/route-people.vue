@@ -43,18 +43,6 @@
 
     export default {
 
-        beforeRouteEnter(to, from, next) {
-
-            userService.all('department,projectCount').then((result) => {
-                next(vm => {
-                    vm.users = result.data.data;
-                });
-            });
-
-        },
-
-        components: {},
-
         data() {
             return {
                 active_only: false,
@@ -64,8 +52,8 @@
 
         computed: {
             filtered_users() {
-                if (!this.active_only) return this.users;
-                return this.users.filter((user) => {
+                if (!this.active_only) return this.$store.state.users;
+                return this.$store.state.users.filter((user) => {
                     return user.projects_count > 0;
                 });
             }

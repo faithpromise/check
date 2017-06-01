@@ -7,8 +7,9 @@ export default {
         return axios.get(url);
     },
 
-    find(id) {
-        return axios.get('/api/users/' + id);
+    find(id, include) {
+        let url = '/api/users/' + id + (include ? '?include=' + include : '');
+        return axios.get(url);
     },
 
     save(user) {
@@ -21,6 +22,10 @@ export default {
 
     update(user) {
         return axios.put('/api/users/' + user.id, user);
+    },
+
+    delete(user) {
+        return axios.delete('/api/users/' + user.id);
     },
 
 }

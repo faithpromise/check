@@ -224,6 +224,7 @@
             reset() {
                 this.clear_input();
                 this.reset_delete_count();
+                this.is_creating_user = false;
             },
 
             magically_fill_new_user() {
