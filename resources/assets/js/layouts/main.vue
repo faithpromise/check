@@ -39,7 +39,7 @@
 //                    { route: 'home', title: 'Files' },
                 ],
                 account_nav:     [
-                    { route: 'person_edit', params: { id: token.sub }, title: 'Profile' },
+                    { route: 'person', params: { id: token.sub }, title: 'Profile' },
 //                    { route: 'settings', title: 'Settings' },
                     { route: 'logout', title: 'Sign Out' },
                 ],

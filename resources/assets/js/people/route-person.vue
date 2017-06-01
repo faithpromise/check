@@ -51,7 +51,7 @@
         beforeRouteEnter(to, from, next) {
 
             let user     = userService.find(to.params.id, 'department');
-            let projects = projectService.by_requester(to.params.id, 'agent,inactive');
+            let projects = projectService.by_user(to.params.id, 'requester,agent,inactive');
 
             axios.all([user, projects])
                 .then(axios.spread((user, projects) => {

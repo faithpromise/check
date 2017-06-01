@@ -15,7 +15,6 @@
         <div class="ProjectItem-from" v-if="project.agent">
           assigned to
           <span class="ProjectItem-requester">{{ project.agent.data.name }}</span>
-          <span>{{ project.created_at | moment('from', 'now') }}</span>
         </div>
 
       </div>

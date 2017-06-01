@@ -15,6 +15,15 @@ class ProjectsController extends Controller {
 
         // Limit to single requester
 
+        if ($request->has('user_id')) {
+            $user_id = $request->get('user_id');
+            $projects->where(function ($query) use ($user_id) {
+                $query->where('requester_id', '=', $user_id)->orWhere('agent_id', '=', $user_id);
+            });
+        }
+
+        // Limit to single requester
+
         if ($request->has('requester_id'))
             $projects->where('requester_id', '=', $request->get('requester_id'));
 

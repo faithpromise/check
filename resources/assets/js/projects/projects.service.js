@@ -18,4 +18,8 @@ export default {
         return axios.get('/api/projects', { params: { requester_id: id, include } });
     },
 
+    by_user(id, include) {
+        return axios.get('/api/projects', { params: { user_id: id, include } });
+    },
+
 }
