@@ -18,8 +18,17 @@ export default {
         return axios.get('/api/projects', { params: { requester_id: id, include } });
     },
 
-    by_user(id, include) {
-        return axios.get('/api/projects', { params: { user_id: id, include } });
+    by_user(id, params = {}) {
+        params.user_id = id;
+        return axios.get('/api/projects', { params });
+    },
+
+    by_requester_department(id, include) {
+        return axios.get('/api/projects', { params: { requester_department_id: id, include } });
+    },
+
+    by_agent_department(id, include) {
+        return axios.get('/api/projects', { params: { agent_department_id: id, include } });
     },
 
 }

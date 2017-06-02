@@ -4,6 +4,7 @@ import store from './vuex/store';
 import auth from './auth/auth';
 import auth_routes from './auth/auth.routes';
 import people_routes from './people/people.routes';
+import departments_routes from './departments/departments.routes';
 import projects_routes from './projects/projects.routes';
 
 let placeholder = { template: '<div>Placeholder</div>' };
@@ -16,7 +17,7 @@ const routes = [
                        { name: 'home', path: '', redirect: { name: 'projects' } },
                        { name: 'settings', path: '/settings', component: placeholder },
                        { name: 'profile', path: '/profile', component: placeholder },
-                   ].concat(projects_routes, people_routes)
+                   ].concat(projects_routes, people_routes, departments_routes)
     },
 
 ].concat(auth_routes);

@@ -32,6 +32,7 @@ class ProjectsTransformer extends TransformerAbstract {
             'created_at'         => $project->created_at->toDateTimeString(),
             'due_at'             => $project->due_at ? $project->due_at->toDateTimeString() : null,
             'artwork_due_at'     => $project->due_at ? $project->artwork_due_at->toDateTimeString() : null,
+            'closed_at'          => $project->closed_at ? $project->closed_at->toDateTimeString() : null,
             'weekdays_remaining' => $project->weekdays_remaining,
             'status'             => $project->status,
             'is_active'          => $project->is_active,

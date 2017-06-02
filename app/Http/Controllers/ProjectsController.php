@@ -22,22 +22,42 @@ class ProjectsController extends Controller {
             });
         }
 
-        // Limit to single requester
+        // By single requester
 
         if ($request->has('requester_id'))
             $projects->where('requester_id', '=', $request->get('requester_id'));
 
-        // Include inactive projects
-        if (in_array('inactive', $includes)) {
-            $projects->withInactive();
-            $includes = array_diff($includes, ['inactive']);
+        // By department of the requester
+
+        if ($request->has('requester_department_id')) {
+            $department_id = $request->get('requester_department_id');
+            $projects->whereHas('requester', function ($query) use ($department_id) {
+                $query->where('department_id', '=', $department_id);
+            });
         }
+
+        // Inactive param
+
+        if ($request->get('inactive'))
+            $projects->inactive();
+
+        // Closed param
+
+        if ($request->get('closed'))
+            $projects->closed()->orderBy('closed_at', 'desc')->limit($request->get('limit', 20));
+
+        // Order
+
+        if ($request->get('order_by') === 'inactive')
+            $projects->orderBy('is_backlog', 'asc')->orderBy('closed_at', 'desc')->orderBy('created_at', 'desc');
 
         $result = $projects->get();
 
-        $result = $result->sortBy(function ($project) {
-            return $project->status['sort'] . ($project->due_at ? ' ' . $project->due_at->timestamp : '');
-        });
+        if ($request->get('order_by') === 'status') {
+            $result = $result->sortBy(function ($project) {
+                return $project->status['sort'] . ($project->due_at ? ' ' . $project->due_at->timestamp : '');
+            });
+        }
 
         if (!empty($includes))
             $result->load($includes);

@@ -6,6 +6,7 @@ use App\Scopes\ActiveProjectScope;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Database\Eloquent\Builder;
 
 /**
  * Class Project
@@ -23,7 +24,7 @@ class Project extends Model {
 
     use SoftDeletes;
 
-    protected $dates = ['due_at', 'created_at', 'updated_at', 'ordered_at'];
+    protected $dates = ['due_at', 'closed_at', 'created_at', 'updated_at', 'ordered_at'];
     public $appends = ['full_name', 'estimated_delivery_date', 'is_overdue', 'is_overdue_likely', 'status', 'has_thumb', 'thumb_url'];
     public $fillable = ['event_id', 'requester_id', 'agent_id', 'name', 'notes', 'is_purchase', 'purchase_order', 'estimate_sent_at', 'delivered_at', 'production_days', 'is_template', 'is_notable', 'approved_at', 'due_at', 'closed_at'];
     private $send_assignment_notification = true;
@@ -94,16 +95,25 @@ class Project extends Model {
     |--------------------------------------------------------------------------
     */
 
-    public function scopeWithInactive($query) {
+    public function scopeWithInactive(Builder $query) {
         $query->withoutGlobalScope(ActiveProjectScope::class);
     }
 
-    public function scopeActive($query) {
-        $query->where('is_backlog', '=', false)
-            ->whereNull('closed_at');
+    public function scopeInactive(Builder $query) {
+
+        $query->withoutGlobalScope(ActiveProjectScope::class)->where(function ($query) {
+            $query->where('is_backlog', '=', true)->orWhereNotNull('closed_at');
+        });
+
     }
 
-    public function scopePending($query) {
+    public function scopeClosed(Builder $query) {
+
+        $query->withoutGlobalScope(ActiveProjectScope::class)->whereNotNull('closed_at');
+
+    }
+
+    public function scopePending(Builder $query) {
         $query->where('is_backlog', '=', false)
             ->whereNull('closed_at')
             ->whereDoesntHave('tasks', function ($tasks_query) {

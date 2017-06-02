@@ -19,19 +19,19 @@
     </page-header>
 
     <div class="Header" v-if="active_projects.length">
-      Projects
+      Active Projects
     </div>
 
     <div class="Projects-list">
       <project-list v-bind:projects="active_projects"></project-list>
     </div>
 
-    <div class="Header" v-if="inactive_projects.length">
-      Inactive Projects
+    <div class="Header" v-if="closed_projects.length">
+      Recently Closed Projects
     </div>
 
     <div class="Projects-list">
-      <project-list v-bind:projects="inactive_projects"></project-list>
+      <project-list v-bind:projects="closed_projects"></project-list>
     </div>
 
   </div>
@@ -46,26 +46,45 @@
     import projectList from '../projects/project-list.vue';
     import router from '../routes';
 
+    let load = (to, next, context = null) => {
+
+        let project_includes = 'requester,agent';
+
+        let user            = userService.find(to.params.id, 'department');
+        let active_projects = projectService.by_user(to.params.id, { include: project_includes });
+        let closed_projects = projectService.by_user(to.params.id, { include: project_includes, closed: true });
+
+        axios.all([user, active_projects, closed_projects])
+            .then(axios.spread((user, active_projects, closed_projects) => {
+
+                if (context) {
+                    assign_data(context, user, active_projects, closed_projects);
+                    next();
+                } else {
+                    next(vm => {
+                        assign_data(vm, user, active_projects, closed_projects);
+                    });
+                }
+
+            }));
+
+        function assign_data(vm, user, active_projects, closed_projects) {
+            vm.user            = user.data.data;
+            vm.active_projects = active_projects.data.data;
+            vm.closed_projects = closed_projects.data.data;
+            vm.loaded          = true;
+        }
+
+    };
+
     export default {
 
         beforeRouteEnter(to, from, next) {
-
-            let user     = userService.find(to.params.id, 'department');
-            let projects = projectService.by_user(to.params.id, 'requester,agent,inactive');
-
-            axios.all([user, projects])
-                .then(axios.spread((user, projects) => {
-                    next(vm => {
-                        vm.user     = user.data.data;
-                        vm.projects = projects.data.data;
-                        vm.loaded   = true;
-                    });
-                }));
-
+            load(to, next);
         },
 
         beforeRouteUpdate(to, from, next) {
-            this.beforeRouteEnter(to, from, next);
+            load(to, next, this);
         },
 
         components: {
@@ -76,31 +95,16 @@
 
         data() {
             return {
-                user:         {},
-                projects:     [],
-                loaded:       false,
-                edit_options: [
+                user:            {},
+                active_projects: [],
+                closed_projects: [],
+                loaded:          false,
+                edit_options:    [
                     { title: 'Edit', to: { name: 'person_edit' } },
                     null,
                     { title: 'Delete', event: 'delete' },
                 ],
             }
-        },
-
-        computed: {
-
-            active_projects() {
-                return this.projects.filter((project) => {
-                    return project.is_active;
-                });
-            },
-
-            inactive_projects() {
-                return this.projects.filter((project) => {
-                    return !project.is_active;
-                }).slice().reverse();
-            },
-
         },
 
         methods: {

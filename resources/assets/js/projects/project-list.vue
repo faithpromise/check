@@ -20,7 +20,8 @@
       </div>
 
       <div class="ProjectItem-status">
-        <span class="ProjectItem-due">{{ project.artwork_due_at | dueFormat }}</span>
+        <span class="ProjectItem-due" v-if="!project.closed_at">{{ project.artwork_due_at | dueFormat }}</span>
+        <span class="ProjectItem-due" v-if="project.closed_at">{{ project.closed_at | dueFormat }}</span>
         <span class="ProjectStatus" v-bind:class="'ProjectStatus--' + project.status.slug" v-if="project.status.slug !== 'active'">{{ project.status.name }}</span>
       </div>
 
