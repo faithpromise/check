@@ -31,4 +31,20 @@ export default {
         return axios.get('/api/projects', { params: { agent_department_id: id, include } });
     },
 
+    save(project) {
+
+        if (project.id)
+            return this.update(project);
+
+        return axios.post('/api/projects', project);
+    },
+
+    update(project) {
+        return axios.put('/api/projects/' + project.id, project);
+    },
+
+    delete(project) {
+        return axios.delete('/api/projects/' + project.id);
+    },
+
 }

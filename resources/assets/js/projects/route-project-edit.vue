@@ -6,17 +6,21 @@
       <template slot="title">{{ project.name }}</template>
     </page-header>
 
-    <div class="Project-comment">
-      <new-comment
-              v-bind:project-id="project.id"
-              v-bind:default-recipients="project.recipients.data">
-      </new-comment>
-    </div>
-
-    <comments
-            v-bind:project-id="project.id"
-            v-bind:comments="project.comments.data">
-    </comments>
+    <form class="Form-container">
+      <div class="Field">
+        <input class="Control" type="text" v-model="project.name" placeholder="project name" required>
+      </div>
+      <div class="Fields">
+        <div class="Field Field--half">
+          <label class="Field-label">Production Time</label>
+          <input class="Control" type="text" v-model="project.production_days">
+        </div>
+      </div>
+      <div class="Form-actions">
+        <button class="Button Button--primary" type="submit">Save</button>
+        <router-link class="Button Button--cancel" v-bind:to="{ name: 'project', params: { id: project.id } }">cancel</router-link>
+      </div>
+    </form>
 
   </div>
 
@@ -25,18 +29,12 @@
 
     import projectService from './projects.service';
     import pageHeader from '../../sunday-morning/admin/js/components/page-header.vue';
-    import newComment from '../comments/new-comment.vue';
-    import comments from '../comments/comments.vue';
-
-    import dueFormat from '../filters/due-format';
 
     export default {
 
         beforeRouteEnter(to, from, next) {
 
-            let projects = projectService.find(to.params.id, 'recipients,requester.department,agent,comments.sender,comments.recipients,comments.attachments');
-
-            projects.then((result) => {
+            projectService.find(to.params.id).then((result) => {
                 next(vm => {
                     vm.project = result.data.data;
                 });
@@ -46,53 +44,19 @@
 
         components: {
             pageHeader,
-            newComment,
-            comments,
         },
 
-        filters: {
-            dueFormat
-        },
+        filters: {},
 
         data() {
             return {
-                project:      null,
-                is_listening: false,
+                project: null,
             }
         },
 
-        watch: {
-            project() {
-                this.listen();
-            }
-        },
+        watch: {},
 
-        beforeDestroy() {
-            this.leave();
-        },
-
-        methods: {
-
-            listen() {
-
-                if (this.is_listening || !this.project) return;
-
-                this.is_listening = true;
-
-                Echo.channel('project.' + this.project.id)
-                    .listen('CommentCreated', this.on_comment_added);
-
-            },
-
-            leave() {
-                Echo.leave('.project.' + this.project.id);
-            },
-
-            on_comment_added(e) {
-                this.project.comments.data.unshift(e.data);
-            },
-
-        },
+        methods: {},
 
     }
 </script>

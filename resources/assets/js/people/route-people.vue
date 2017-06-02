@@ -2,14 +2,14 @@
 
   <div class="Content Content--flush">
 
-    <ul class="Tab-list">
-      <li class="Tab-item">
-        <router-link class="Tab-link" v-bind:to="{ name: 'people' }">People</router-link>
-      </li>
-      <li class="Tab-item">
-        <a class="Tab-link">Departments</a>
-      </li>
-    </ul>
+    <div class="PageHeader">
+      <div class="PageHeader-title">People</div>
+    </div>
+
+    <div class="Tabs-list">
+      <router-link class="Tabs-item" v-bind:to="{ name: 'people' }">People</router-link>
+      <a class="Tabs-item">Departments</a>
+    </div>
 
     <div class="Content-container">
 

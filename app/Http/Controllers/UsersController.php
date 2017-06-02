@@ -10,7 +10,6 @@ use Illuminate\Http\Request;
 
 class UsersController extends Controller {
 
-
     public function index(Request $request) {
 
         $query = User::orderBy('first_name')->orderBy('last_name');
@@ -36,11 +35,6 @@ class UsersController extends Controller {
         return $data->respond();
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function create(Request $request) {
 
         User::unguard();
@@ -54,22 +48,10 @@ class UsersController extends Controller {
 
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request $request
-     * @return \Illuminate\Http\Response
-     */
     public function store(Request $request) {
         //
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int $id
-     * @return \Illuminate\Http\Response
-     */
     public function show($id, Request $request) {
 
         $user = User::find($id);
@@ -86,13 +68,6 @@ class UsersController extends Controller {
         return $data->respond();
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request $request
-     * @param  int $id
-     * @return \Illuminate\Http\Response
-     */
     public function update(Request $request, $id) {
 
         $user = User::find($id);
@@ -104,11 +79,6 @@ class UsersController extends Controller {
 
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int $id
-     */
     public function destroy($id) {
 
         $user = User::find($id);

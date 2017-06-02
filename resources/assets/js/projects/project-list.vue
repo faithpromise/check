@@ -1,6 +1,12 @@
 <template>
   <div>
-    <router-link class="ProjectItem" v-for="project in projects" :key="project.id" v-bind:to="{ name: 'project_detail', params: { id: project.id } }">
+    <router-link
+            class="ProjectItem"
+            v-bind:class="{ 'is-selected': project.is_selected }"
+            v-for="project in projects"
+            :key="project.id"
+            v-bind:to="{ name: 'project', params: { id: project.id } }"
+    >
 
       <div class="ProjectItem-about">
         <div class="ProjectItem-name">{{ project.name }}</div>
@@ -40,6 +46,12 @@
 
         filters: {
             dueFormat
+        },
+
+        data() {
+            return {
+                selected: []
+            }
         },
 
         methods: {

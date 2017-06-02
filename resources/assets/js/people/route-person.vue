@@ -2,7 +2,7 @@
 
   <div class="Content" v-if="loaded">
 
-    <page-header>
+    <page-header v-bind:margin="false">
       <template slot="title">
         <span v-if="user.department">{{ user.department.data.name }} // </span>
         {{ user.name }}
@@ -101,7 +101,7 @@
                 loaded:          false,
                 edit_options:    [
                     { title: 'Edit', to: { name: 'person_edit' } },
-                    null,
+                    { divider: true },
                     { title: 'Delete', event: 'delete' },
                 ],
             }

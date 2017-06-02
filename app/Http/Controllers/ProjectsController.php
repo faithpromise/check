@@ -93,21 +93,46 @@ class ProjectsController extends Controller {
 
     }
 
-//    public function store(Request $request) {
-//        $project = new Project();
-//        $project->fillMore($request->input('data'))->save();
-//        $this->update_recipients($project, $request->input('data'));
-//
-//        return ['data' => $project];
-//    }
+    public function store(Request $request) {
 
-//    public function update($id, Request $request) {
-//        $project = Project::find($id);
-//        $project->fillMore($request->input('data'))->save();
-//        $this->update_recipients($project, $request->input('data'));
-//
-//        return ['data' => $project];
-//    }
+        $project = new Project();
+
+        return $this->save($project, $request);
+    }
+
+    public function update($id, Request $request) {
+
+        /* @var Project $project */
+        $project = Project::find($id);
+
+        return $this->save($project, $request);
+
+    }
+
+    private function save(Project $project, Request $request) {
+
+        Project::unguard();
+
+        // Gets all the request data that is found in fillable
+        $data = array_intersect_key($request->all(), array_flip($project->fillable));
+
+        $project->fill($data);
+
+        if ($request->has('agent')) {
+            $project->agent_id = $request->get('agent')['data']['id'];
+        }
+
+        if ($request->has('requester')) {
+            $project->requester_id = $request->get('requester')['data']['id'];
+        }
+
+        $project->save();
+
+        $this->update_recipients($project, $request->get('recipients'));
+
+        return fractal($project, new ProjectsTransformer);
+
+    }
 
 //    public function uploadThumb($id, Request $request) {
 //
@@ -132,11 +157,16 @@ class ProjectsController extends Controller {
 //        return $img->response($project->getThumbExtension());
 //    }
 
-    private function update_recipients(Project $project, $data) {
-        if (array_key_exists('recipients', $data)) {
-            $recipients = array_pluck($data['recipients'], 'id');
-            $project->recipients()->sync($recipients);
+    private function update_recipients(Project $project, $recipients) {
+        if ($recipients) {
+            $recipients_ids = array_pluck($recipients['data'], 'id');
+            $project->recipients()->sync($recipients_ids);
         }
+    }
+
+    public function destroy($id) {
+        $user = Project::withInactive()->find($id);
+        $user->delete();
     }
 
 }

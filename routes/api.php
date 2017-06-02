@@ -16,6 +16,9 @@ use Illuminate\Support\Facades\Route;
 Route::get('/projects', 'ProjectsController@index');
 Route::get('/projects/{id}', 'ProjectsController@show');
 Route::get('/agents', 'AgentsController@index');
+Route::post('/projects', 'ProjectsController@create');
+Route::put('/projects/{id}', 'ProjectsController@update');
+Route::delete('/projects/{id}', 'ProjectsController@destroy');
 
 // Users
 

@@ -68,7 +68,7 @@
                 loaded:             false,
                 edit_options:       [
                     { title: 'Edit', to: { name: 'department_edit' } },
-                    null,
+                    { divider: true },
                     { title: 'Delete', event: 'delete' },
                 ],
             }

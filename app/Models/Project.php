@@ -26,7 +26,7 @@ class Project extends Model {
 
     protected $dates = ['due_at', 'closed_at', 'created_at', 'updated_at', 'ordered_at'];
     public $appends = ['full_name', 'estimated_delivery_date', 'is_overdue', 'is_overdue_likely', 'status', 'has_thumb', 'thumb_url'];
-    public $fillable = ['event_id', 'requester_id', 'agent_id', 'name', 'notes', 'is_purchase', 'purchase_order', 'estimate_sent_at', 'delivered_at', 'production_days', 'is_template', 'is_notable', 'approved_at', 'due_at', 'closed_at'];
+    public $fillable = ['requester_id', 'agent_id', 'name', 'notes', 'is_purchase', 'estimate_sent_at', 'production_days', 'is_template', 'approved_at', 'due_at', 'closed_at'];
     private $send_assignment_notification = true;
     private $create_setup_task = true;
     private $create_estimate_task = true;
@@ -343,26 +343,6 @@ class Project extends Model {
         }
 
         return $this->rebuild_owners_timeline;
-    }
-
-    public function fillMore($data) {
-
-        $this->fill($data);
-
-        if (isset($data['event']['id'])) {
-            $this->setEventId($data['event']['id']);
-        }
-
-        if (isset($data['requester']['id'])) {
-            $this->setRequesterId($data['requester']['id']);
-        }
-
-        if (isset($data['agent']['id'])) {
-            $this->setAgentId($data['agent']['id']);
-        }
-
-        return $this;
-
     }
 
     private function getEstimatedDeliveryDate() {

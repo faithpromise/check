@@ -38,9 +38,13 @@ router.beforeEach((to, from, next) => {
         return next({ name: 'login' })
     }
 
-    NProgress.start();
+    if (store.state.keep_flash_message) {
+        store.commit('keep_flash', false);
+    } else {
+        store.dispatch('remove_flash');
+    }
 
-    store.dispatch('remove_flash');
+    NProgress.start();
 
     // Set body class
     document.body.classList.remove(from.name + '_page');

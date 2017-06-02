@@ -11,6 +11,10 @@ const mutations = {
         state.flash_message = payload;
     },
 
+    keep_flash(state, payload) {
+        state.keep_flash_message = payload;
+    },
+
     all_users(state, payload) {
         state.users = payload;
     }
