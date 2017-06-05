@@ -21,6 +21,9 @@
         <input class="Control" type="email" v-model="user.email" placeholder="email" required>
       </div>
       <div class="Field">
+        <department-select v-model="user.department_id"></department-select>
+      </div>
+      <div class="Field">
         <label>
           <input class="" type="checkbox" v-model="user.is_agent"> This user can create projects
         </label>
@@ -39,6 +42,7 @@
     import userService from './users.service';
     import flash from '../services/flash.service';
     import pageHeader from '../../sunday-morning/admin/js/components/page-header.vue';
+    import departmentSelect from '../departments/department-select.vue';
     import router from '../routes';
 
     export default {
@@ -53,6 +57,7 @@
 
         components: {
             pageHeader,
+            departmentSelect,
         },
 
         data() {
@@ -72,10 +77,11 @@
             save() {
                 userService.save(this.user).then(() => {
                     let msg = this.is_new ? 'Person Added' : 'Person Updated';
+                    let redirect_to = this.is_new ? { name: 'users' } : { name: 'user', params: { id: this.user.id } };
                     flash.keep().success(msg);
-                    router.push({ name: 'users' });
+                    router.push(redirect_to);
                 });
-            }
+            },
 
         },
 

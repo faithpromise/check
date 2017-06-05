@@ -16,7 +16,7 @@ use Illuminate\Support\Facades\Route;
 Route::get('/projects', 'ProjectsController@index');
 Route::get('/projects/{id}', 'ProjectsController@show');
 Route::get('/agents', 'AgentsController@index');
-Route::post('/projects', 'ProjectsController@create');
+Route::post('/projects', 'ProjectsController@store');
 Route::put('/projects/{id}', 'ProjectsController@update');
 Route::delete('/projects/{id}', 'ProjectsController@destroy');
 
@@ -24,7 +24,7 @@ Route::delete('/projects/{id}', 'ProjectsController@destroy');
 
 Route::get('/users', 'UsersController@index');
 Route::get('/users/{id}', 'UsersController@show');
-Route::post('/users', 'UsersController@create');
+Route::post('/users', 'UsersController@store');
 Route::put('/users/{id}', 'UsersController@update');
 Route::delete('/users/{id}', 'UsersController@destroy');
 
@@ -32,7 +32,7 @@ Route::delete('/users/{id}', 'UsersController@destroy');
 
 Route::get('/departments', 'DepartmentsController@index');
 Route::get('/departments/{id}', 'DepartmentsController@show');
-Route::post('/departments', 'DepartmentsController@create');
+Route::post('/departments', 'DepartmentsController@store');
 Route::put('/departments/{id}', 'DepartmentsController@update');
 Route::delete('/departments/{id}', 'DepartmentsController@destroy');
 

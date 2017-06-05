@@ -4,7 +4,6 @@
 
     <page-header v-bind:margin="false">
       <template slot="title">
-        <span v-if="user.department">{{ user.department.data.name }} // </span>
         {{ user.name }}
       </template>
       <template slot="actions">
@@ -16,7 +15,12 @@
         >
         </button-dropdown>
       </template>
+      <div v-if="user.department">
+        <router-link v-bind:to="{ name: 'department', params: { id: user.department.data.id } }">{{ user.department.data.name }}</router-link>
+      </div>
     </page-header>
+
+    <p v-show="show_empty_message">No projects</p>
 
     <div class="Header" v-if="active_projects.length">
       Active Projects
@@ -104,6 +108,12 @@
                     { divider: true },
                     { title: 'Delete', event: 'delete' },
                 ],
+            }
+        },
+
+        computed: {
+            show_empty_message() {
+                return this.loaded && this.active_projects.length === 0 && this.closed_projects.length === 0;
             }
         },
 

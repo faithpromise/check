@@ -35,7 +35,7 @@ class UsersController extends Controller {
         return $data->respond();
     }
 
-    public function create(Request $request) {
+    public function store(Request $request) {
 
         User::unguard();
 
@@ -46,10 +46,6 @@ class UsersController extends Controller {
 
         return fractal($user, new UserTransformer)->respond();
 
-    }
-
-    public function store(Request $request) {
-        //
     }
 
     public function show($id, Request $request) {

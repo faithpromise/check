@@ -17,7 +17,7 @@ export default {
         if (department.id)
             return this.update(department);
 
-        return axios.post('/api/department', department);
+        return axios.post('/api/departments', department);
     },
 
     update(department) {
