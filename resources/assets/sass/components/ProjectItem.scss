@@ -1,0 +1,75 @@
+.ProjectItem {
+  @include link-colors-all($root-text-color);
+  margin-top:    -1px;
+  border-bottom: 1px solid $divider-color;
+  border-top:    1px solid $divider-color;
+  font-size:     calc-em(14px);
+
+  &:hover {
+    text-decoration: none;
+  }
+}
+
+@media (max-width: calc-em(512px)) {
+
+  .ProjectItem {
+    padding: calc-em(16px, 14px) 0;
+
+  }
+
+  .ProjectItem-name {
+    display:     block;
+    font-weight: 700;
+  }
+
+  .ProjectItem-status {
+    display:         flex;
+    justify-content: space-between;
+  }
+
+}
+
+@media (min-width: calc-em(513px)) {
+
+  .ProjectItem {
+    display:         flex;
+    justify-content: space-between;
+    padding:         calc-em(16px, 14px);
+    //border:          1px solid $divider-color;
+    cursor:          pointer;
+
+    &:hover {
+      background-color: $color-gray-lightest;
+    }
+
+    &.is-selected {
+      background-color: aliceblue;
+    }
+
+  }
+
+  .ProjectItem-name {
+    font-weight: 700;
+  }
+
+  .ProjectItem-department:after {
+    content: ' / ';
+  }
+
+  //.ProjectItem-from {
+  //  width: calc-em(180px, 14px);
+  //}
+
+  .ProjectItem-status {
+    display:         flex;
+    justify-content: space-between;
+    align-items:     center;
+    //width:           calc-em(170px, 14px);
+    white-space:     nowrap;
+  }
+
+  .ProjectItem-due {
+    padding-right: 1em;
+  }
+
+}
