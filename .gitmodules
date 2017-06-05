@@ -1,0 +1,3 @@
+[submodule "resources/assets/sunday-morning"]
+	path = resources/assets/sunday-morning
+	url = https://bradroberts@github.com/bradroberts/sunday-morning.git
