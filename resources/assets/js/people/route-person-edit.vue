@@ -4,11 +4,11 @@
 
     <page-header divider="true">
       <template slot="title">
-        {{ user.name }}
+        {{ is_new ? 'Add New Person' : user.name }}
       </template>
     </page-header>
 
-    <form class="Form-container">
+    <form class="Form-container" v-on:submit.prevent="save">
       <div class="Fields">
         <div class="Field Field--half">
           <input class="Control" type="text" v-model="user.first_name" placeholder="first name" required>
@@ -37,9 +37,9 @@
 <script>
 
     import userService from './users.service';
-    import projectService from '../projects/projects.service';
+    import flash from '../services/flash.service';
     import pageHeader from '../../sunday-morning/admin/js/components/page-header.vue';
-    import projectList from '../projects/project-list.vue';
+    import router from '../routes';
 
     export default {
 
@@ -61,9 +61,30 @@
             }
         },
 
+        computed: {
+            is_new() {
+                return this.$route.name === 'person_new';
+            }
+        },
+
+        methods: {
+
+            save() {
+                userService.save(this.user).then(() => {
+                    let msg = this.is_new ? 'Person Added' : 'Person Updated';
+                    flash.keep().success(msg);
+                    router.push({ name: 'people' });
+                });
+            }
+
+        },
+
     }
 
     let load = (to, next, context = null) => {
+
+        if (to.name === 'person_new')
+            return next();
 
         userService.find(to.params.id).then((result) => {
 

@@ -2,9 +2,12 @@
 
   <div class="Content Content--flush">
 
-    <div class="PageHeader">
-      <div class="PageHeader-title">People</div>
-    </div>
+    <page-header v-bind:margin="false">
+      <template slot="title">People</template>
+      <template slot="actions">
+        <router-link class="Button Button--primary" v-bind:to="{ name: 'person_new' }">Add Person</router-link>
+      </template>
+    </page-header>
 
     <div class="Tabs-list">
       <router-link class="Tabs-item" v-bind:to="{ name: 'people' }">People</router-link>
@@ -40,8 +43,13 @@
 <script>
 
     import userService from './users.service';
+    import pageHeader from '../../sunday-morning/admin/js/components/page-header.vue';
 
     export default {
+
+        components: {
+            pageHeader,
+        },
 
         data() {
             return {

@@ -9,6 +9,11 @@ export default [
         component: people,
     },
     {
+        name:      'person_new',
+        path:      '/people/new',
+        component: edit,
+    },
+    {
         name:      'person',
         path:      '/people/:id',
         component: person,
