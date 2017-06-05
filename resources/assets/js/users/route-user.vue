@@ -49,6 +49,7 @@
     import buttonDropdown from '../../sunday-morning/forms/js/components/button-dropdown.vue';
     import projectList from '../projects/project-list.vue';
     import router from '../routes';
+    import recentsService from '../services/recents';
 
     let load = (to, next, context = null) => {
 
@@ -111,6 +112,17 @@
             }
         },
 
+        created() {
+            this.add_to_recents();
+        },
+
+        watch: {
+            user(value) {
+                if (value.id)
+                    this.add_to_recents(value.id);
+            }
+        },
+
         computed: {
             show_empty_message() {
                 return this.loaded && this.active_projects.length === 0 && this.closed_projects.length === 0;
@@ -126,7 +138,11 @@
                         router.replace({ name: 'users' });
                     });
                 }
-            }
+            },
+
+            add_to_recents(id) {
+                recentsService.add_user(id);
+            },
 
         },
 
