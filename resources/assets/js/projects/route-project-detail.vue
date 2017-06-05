@@ -49,7 +49,7 @@
     import comments from '../comments/comments.vue';
     import buttonDropdown from '../../sunday-morning/forms/js/components/button-dropdown.vue';
     import router from '../routes';
-    import flash from '../flash.service';
+    import flash from '../services/flash.service';
 
     import dueFormat from '../filters/due-format';
 
