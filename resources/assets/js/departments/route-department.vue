@@ -42,7 +42,7 @@
         beforeRouteEnter(to, from, next) {
 
             let department         = departmentsService.find(to.params.id);
-            let requested_projects = projectService.by_requester_department(to.params.id, 'requester,agent');
+            let requested_projects = projectService.by_requester_department(to.params.id, { include: 'requester,agent', order_by: 'status' });
 
             axios.all([department, requested_projects])
                 .then(axios.spread((department, requested_projects) => {

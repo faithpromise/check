@@ -23,12 +23,13 @@ export default {
         return axios.get('/api/projects', { params });
     },
 
-    by_requester_department(id, include) {
-        return axios.get('/api/projects', { params: { requester_department_id: id, include } });
+    by_requester_department(id, params) {
+        params.requester_department_id = id;
+        return axios.get('/api/projects', { params });
     },
 
-    by_agent_department(id, include) {
-        return axios.get('/api/projects', { params: { agent_department_id: id, include } });
+    by_agent_department(id, params) {
+        return axios.get('/api/projects', { params });
     },
 
     save(project) {
