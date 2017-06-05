@@ -36,6 +36,7 @@
                 nav:             [
                     { route: 'projects', title: 'Projects' },
                     { route: 'users', title: 'People' },
+                    { route: 'search', title: 'Search' },
 //                    { route: 'home', title: 'Files' },
                 ],
                 account_nav:     [

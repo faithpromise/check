@@ -5,7 +5,7 @@ import axios from 'axios';
 import VueHead from 'vue-head';
 import VueMoment from 'vue-moment';
 
-import usersService from './users/users.service';
+import userService from './users/users.service';
 
 /**
  * Set up Echo for real time updates
@@ -25,22 +25,20 @@ new Vue({
     store,
     router,
     el:      '#app',
-    // beforeCreate() {
-    //     usersService.all().then((result) => {
-    //         store.commit('all_users', result.data.data);
-    //     });
-    // },
+
     created() {
         this.update_users();
         window.Echo.channel('users')
             .listen('UserSaved', this.update_users)
             .listen('UserDeleted', this.update_users);
     },
+
     methods: {
         update_users() {
-            usersService.all('department,projectCount').then((result) => {
+            userService.all({ include: 'department,projectCount' }).then((result) => {
                 store.commit('all_users', result.data.data);
             });
         },
     }
+
 });

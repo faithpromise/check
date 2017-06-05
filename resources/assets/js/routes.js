@@ -6,6 +6,7 @@ import auth_routes from './auth/auth.routes';
 import users_routes from './users/users.routes';
 import departments_routes from './departments/departments.routes';
 import projects_routes from './projects/projects.routes';
+import search from './search/route-search.vue';
 
 let placeholder = { template: '<div>Placeholder</div>' };
 
@@ -15,8 +16,8 @@ const routes = [
         component: defaultLayout,
         children:  [
                        { name: 'home', path: '', redirect: { name: 'projects' } },
+                       { name: 'search', path: '/search', component: search },
                        { name: 'settings', path: '/settings', component: placeholder },
-                       { name: 'profile', path: '/profile', component: placeholder },
                    ].concat(projects_routes, users_routes, departments_routes)
     },
 

@@ -112,20 +112,16 @@
             }
         },
 
-        created() {
-            this.add_to_recents();
+        computed: {
+            show_empty_message() {
+                return this.loaded && this.active_projects.length === 0 && this.closed_projects.length === 0;
+            }
         },
 
         watch: {
             user(value) {
                 if (value.id)
-                    this.add_to_recents(value.id);
-            }
-        },
-
-        computed: {
-            show_empty_message() {
-                return this.loaded && this.active_projects.length === 0 && this.closed_projects.length === 0;
+                    recentsService.add_user(value.id);
             }
         },
 
@@ -138,10 +134,6 @@
                         router.replace({ name: 'users' });
                     });
                 }
-            },
-
-            add_to_recents(id) {
-                recentsService.add_user(id);
             },
 
         },

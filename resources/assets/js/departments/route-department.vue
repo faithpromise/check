@@ -30,8 +30,10 @@
 </template>
 <script>
 
+    import axios from 'axios';
     import departmentsService from './departments.service';
     import projectService from '../projects/projects.service';
+    import recentsService from '../services/recents';
     import pageHeader from '../../sunday-morning/admin/js/components/page-header.vue';
     import buttonDropdown from '../../sunday-morning/forms/js/components/button-dropdown.vue';
     import projectList from '../projects/project-list.vue';
@@ -74,10 +76,11 @@
             }
         },
 
-        computed: {
-
-
-
+        watch: {
+            department(value) {
+                if (value.id)
+                    recentsService.add_department(value.id);
+            },
         },
 
         methods: {

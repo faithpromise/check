@@ -30,7 +30,8 @@
       </div>
       <div class="Form-actions">
         <button class="Button Button--primary" type="submit">Save</button>
-        <router-link class="Button Button--cancel" v-bind:to="{ name: 'users', params: { id: user.id } }">cancel</router-link>
+        <router-link class="Button Button--cancel" v-bind:to="{ name: 'users' }" v-if="is_new">cancel</router-link>
+        <router-link class="Button Button--cancel" v-bind:to="{ name: 'user', params: { id: user.id } }" v-if="!is_new">cancel</router-link>
       </div>
     </form>
 

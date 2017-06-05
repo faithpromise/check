@@ -46,6 +46,17 @@ class ProjectsController extends Controller {
         if ($request->get('closed'))
             $projects->closed()->orderBy('closed_at', 'desc')->limit($request->get('limit', 20));
 
+        // Search by query string
+
+        if ($query_string = $request->get('query'))
+            $projects->where('name', 'like', '%' . $query_string . '%');
+
+        // Search by id list
+
+        if ($query_string = $request->has('ids')) {
+            $projects->whereIn('id', $request->get('ids'));
+        }
+
         // Order
 
         if ($request->get('order_by') === 'inactive')

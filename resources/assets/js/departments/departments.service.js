@@ -2,9 +2,8 @@ import axios from 'axios';
 
 export default {
 
-    all(include) {
-        let url = '/api/departments' + (include ? '?include=' + include : '');
-        return axios.get(url);
+    all(params) {
+        return axios.get('/api/departments', { params });
     },
 
     find(id, include) {

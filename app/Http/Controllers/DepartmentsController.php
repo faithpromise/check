@@ -20,6 +20,17 @@ class DepartmentsController extends Controller {
             array_splice($includes, $key, 1);
         }
 
+        // Search by query string
+
+        if ($query_string = $request->get('query'))
+            $query->where('name', 'like', '%' . $query_string . '%');
+
+        // Search by id list
+
+        if ($query_string = $request->has('ids')) {
+            $query->whereIn('id', $request->get('ids'));
+        }
+
         $departments = $query->get();
 
         if ($request->has('include'))

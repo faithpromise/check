@@ -39,8 +39,6 @@
 </template>
 <script>
 
-    import userService from './departments.service';
-
     export default {
 
         data() {

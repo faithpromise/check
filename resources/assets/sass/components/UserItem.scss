@@ -1,11 +1,11 @@
 .UserItem {
   @include link-colors-all($root-text-color);
-  display:    block;
-  margin-top: -1px;
-  padding:    1em;
-  border:     1px solid $divider-color;
-  color:      $color-gray-darker;
-  cursor:     pointer;
+  display:       block;
+  margin-top:    -1px;
+  padding:       1em;
+  border-bottom: 1px solid $divider-color;
+  color:         $color-gray-darker;
+  cursor:        pointer;
 
   &:hover {
     background-color: $color-gray-lightest;

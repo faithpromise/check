@@ -2,8 +2,9 @@ import axios from 'axios';
 
 export default {
 
-    all(group_by) {
-        return axios.get('/api/projects?group_by=' + group_by);
+    all(params = {}) {
+
+        return axios.get('/api/projects', { params });
     },
 
     find(id, include) {
@@ -11,7 +12,7 @@ export default {
     },
 
     by_agent(params) {
-        return axios.get('/api/agents?include=projects.requester.department', { params });
+        return axios.get('/api/agents?include=projects.requester', { params });
     },
 
     by_requester(id, include) {

@@ -2,7 +2,7 @@
 
   <div class="Content Content--flush">
 
-    <page-header v-bind:divider="true">
+    <page-header>
       <template slot="title">People</template>
       <template slot="actions">
         <button class="Button" type="button" v-on:click="active_only = !active_only">{{ active_only ? 'Show Everyone' : 'Show Only Actives' }}</button>
@@ -27,7 +27,6 @@
 </template>
 <script>
 
-    import userService from './users.service';
     import pageHeader from '../../sunday-morning/admin/js/components/page-header.vue';
 
     export default {

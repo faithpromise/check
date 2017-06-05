@@ -50,6 +50,7 @@
     import buttonDropdown from '../../sunday-morning/forms/js/components/button-dropdown.vue';
     import router from '../routes';
     import flash from '../services/flash.service';
+    import recentsService from '../services/recents';
 
     import dueFormat from '../filters/due-format';
 
@@ -99,9 +100,11 @@
         },
 
         watch: {
-            project() {
+            project(value) {
                 this.listen();
-            }
+                if (value.id)
+                    recentsService.add_project(value.id);
+            },
         },
 
         beforeDestroy() {

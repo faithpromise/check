@@ -12,14 +12,31 @@ class UsersController extends Controller {
 
     public function index(Request $request) {
 
+        /* @var \Illuminate\Database\Eloquent\Builder $query */
         $query = User::orderBy('first_name')->orderBy('last_name');
 
         $includes = explode(',', $request->get('include'));
+
+        // Include project count
 
         if (in_array('projectCount', $includes)) {
             $query->withCount('projects');
             $key = array_search('projectCount', $includes);
             array_splice($includes, $key, 1);
+        }
+
+        // Search by query string
+
+        if ($query_string = $request->get('query')) {
+            $query->where(function ($query) use ($query_string) {
+                $query->where('first_name', 'like', $query_string . '%')->orWhere('last_name', 'like', $query_string . '%');
+            });
+        }
+
+        // Search by id list
+
+        if ($query_string = $request->has('ids')) {
+            $query->whereIn('id', $request->get('ids'));
         }
 
         $users = $query->get();
