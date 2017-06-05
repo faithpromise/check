@@ -15,7 +15,7 @@
         </button-dropdown>
       </template>
       <div>requested by
-        <router-link v-bind:to="{ name: 'person', params: { id: project.requester.data.id } }">{{ project.requester.data.name }}</router-link>
+        <router-link v-bind:to="{ name: 'user', params: { id: project.requester.data.id } }">{{ project.requester.data.name }}</router-link>
         <span v-if="project.requester.data.department">
           in <router-link v-bind:to="{ name: 'department', params: { id: project.requester.data.department.data.id } }">{{ project.requester.data.department.data.name }}</router-link>
         </span>

@@ -10,7 +10,7 @@
       <template slot="actions">
         <button-dropdown
                 v-bind:title="'Edit ' + user.first_name"
-                v-bind:to="{ name: 'person_edit' }"
+                v-bind:to="{ name: 'user_edit' }"
                 v-bind:options="edit_options"
                 v-on:delete="delete_user"
         >
@@ -100,7 +100,7 @@
                 closed_projects: [],
                 loaded:          false,
                 edit_options:    [
-                    { title: 'Edit', to: { name: 'person_edit' } },
+                    { title: 'Edit', to: { name: 'user_edit' } },
                     { divider: true },
                     { title: 'Delete', event: 'delete' },
                 ],
@@ -113,7 +113,7 @@
                 if (confirm('Are you sure you want to delete this user?')) {
                     userService.delete(this.user).then(() => {
                         this.$store.commit('insert_flash', { message: this.user.name + ' has been removed.' });
-                        router.replace({ name: 'people' });
+                        router.replace({ name: 'users' });
                     });
                 }
             }

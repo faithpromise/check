@@ -5,12 +5,12 @@
     <page-header v-bind:margin="false">
       <template slot="title">People</template>
       <template slot="actions">
-        <router-link class="Button Button--primary" v-bind:to="{ name: 'person_new' }">Add Person</router-link>
+        <router-link class="Button Button--primary" v-bind:to="{ name: 'user_new' }">Add Person</router-link>
       </template>
     </page-header>
 
     <div class="Tabs-list">
-      <router-link class="Tabs-item" v-bind:to="{ name: 'people' }">People</router-link>
+      <router-link class="Tabs-item" v-bind:to="{ name: 'users' }">People</router-link>
       <a class="Tabs-item">Departments</a>
     </div>
 
@@ -18,7 +18,7 @@
 
       <!--<ul>-->
       <!--<li v-for="user in filtered_users">-->
-      <!--<router-link v-bind:to="{ name: 'person', params: { id: user.id } }">{{ user.name }}</router-link>-->
+      <!--<router-link v-bind:to="{ name: 'user', params: { id: user.id } }">{{ user.name }}</router-link>-->
       <!--</li>-->
       <!--</ul>-->
 
@@ -29,7 +29,7 @@
 
       <div class="Projects-list">
 
-        <router-link v-bind:to="{ name: 'person', params: { id: user.id } }" class="UserItem" v-for="user in filtered_users" :key="user.id">
+        <router-link v-bind:to="{ name: 'user', params: { id: user.id } }" class="UserItem" v-for="user in filtered_users" :key="user.id">
           <div class="UserItem-name">{{ user.name }}</div>
           <div class="UserItem-department" v-if="user.department">{{ user.department.data.name }}</div>
         </router-link>

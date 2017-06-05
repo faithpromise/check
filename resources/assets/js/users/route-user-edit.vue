@@ -27,7 +27,7 @@
       </div>
       <div class="Form-actions">
         <button class="Button Button--primary" type="submit">Save</button>
-        <router-link class="Button Button--cancel" v-bind:to="{ name: 'person', params: { id: user.id } }">cancel</router-link>
+        <router-link class="Button Button--cancel" v-bind:to="{ name: 'users', params: { id: user.id } }">cancel</router-link>
       </div>
     </form>
 
@@ -63,7 +63,7 @@
 
         computed: {
             is_new() {
-                return this.$route.name === 'person_new';
+                return this.$route.name === 'user_new';
             }
         },
 
@@ -73,7 +73,7 @@
                 userService.save(this.user).then(() => {
                     let msg = this.is_new ? 'Person Added' : 'Person Updated';
                     flash.keep().success(msg);
-                    router.push({ name: 'people' });
+                    router.push({ name: 'users' });
                 });
             }
 
@@ -83,7 +83,7 @@
 
     let load = (to, next, context = null) => {
 
-        if (to.name === 'person_new')
+        if (to.name === 'user_new')
             return next();
 
         userService.find(to.params.id).then((result) => {

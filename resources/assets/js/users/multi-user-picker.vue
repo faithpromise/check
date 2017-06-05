@@ -56,7 +56,7 @@
 </template>
 <script>
 
-    import userService from '../people/users.service';
+    import userService from './users.service';
 
     export default {
 

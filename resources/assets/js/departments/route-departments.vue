@@ -4,7 +4,7 @@
 
     <ul class="Tab-list">
       <li class="Tab-item">
-        <router-link class="Tab-link" v-bind:to="{ name: 'people' }">People</router-link>
+        <router-link class="Tab-link" v-bind:to="{ name: 'users' }">People</router-link>
       </li>
       <li class="Tab-item">
         <a class="Tab-link">Departments</a>
@@ -15,7 +15,7 @@
 
       <!--<ul>-->
       <!--<li v-for="user in filtered_users">-->
-      <!--<router-link v-bind:to="{ name: 'person', params: { id: user.id } }">{{ user.name }}</router-link>-->
+      <!--<router-link v-bind:to="{ name: 'user', params: { id: user.id } }">{{ user.name }}</router-link>-->
       <!--</li>-->
       <!--</ul>-->
 
@@ -26,7 +26,7 @@
 
       <div class="Projects-list">
 
-        <router-link v-bind:to="{ name: 'person', params: { id: user.id } }" class="UserItem" v-for="user in filtered_users" :key="user.id">
+        <router-link v-bind:to="{ name: 'user', params: { id: user.id } }" class="UserItem" v-for="user in filtered_users" :key="user.id">
           <div class="UserItem-name">{{ user.name }}</div>
           <div class="UserItem-department" v-if="user.department">{{ user.department.data.name }}</div>
         </router-link>

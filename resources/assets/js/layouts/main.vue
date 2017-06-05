@@ -35,11 +35,11 @@
             return {
                 nav:             [
                     { route: 'projects', title: 'Projects' },
-                    { route: 'people', title: 'People' },
+                    { route: 'users', title: 'People' },
 //                    { route: 'home', title: 'Files' },
                 ],
                 account_nav:     [
-                    { route: 'person', params: { id: token.sub }, title: 'Profile' },
+                    { route: 'user', params: { id: token.sub }, title: 'Profile' },
 //                    { route: 'settings', title: 'Settings' },
                     { route: 'logout', title: 'Sign Out' },
                 ],

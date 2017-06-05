@@ -5,7 +5,7 @@ import axios from 'axios';
 import VueHead from 'vue-head';
 import VueMoment from 'vue-moment';
 
-import usersService from './people/users.service';
+import usersService from './users/users.service';
 
 /**
  * Set up Echo for real time updates
