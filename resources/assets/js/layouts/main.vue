@@ -16,7 +16,7 @@
 <script>
 
     import navMenu from '../../sunday-morning/admin/js/components/nav.vue';
-    import flashMessage from '../../sunday-morning/admin/js/components/flash-message.vue';
+    import flashMessage from '../components/flash-message.vue';
     import reLogin from '../auth/re-login.vue';
     import jwtDecode from 'jwt-decode';
 
