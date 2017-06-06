@@ -1,5 +1,6 @@
 <template>
   <div class="Content">
+
     <form @submit.prevent="search">
       <div class="SearchForm">
         <input class="SearchForm-input" type="text" v-model="query">
@@ -11,41 +12,23 @@
       </div>
     </form>
 
-    <div class="SearchResults">
-
-      <div class="SearchResults-section">
-
-        <div class="SearchResults-title">People</div>
-
-        <div class="SearchItem" v-for="user in users" :key="user.id">
-          <router-link class="SearchItem-title" :to="{ name: 'user', params: { id: user.id } }">{{ user.name }}</router-link>
-          <router-link class="SearchItem-subtitle" :to="{ name: 'department', params: { id: user.department.data.id } }" v-if="user.department">{{ user.department.data.name }}</router-link>
-        </div>
-
-      </div>
-
-      <div class="SearchResults-section">
-
-        <div class="SearchResults-title">Departments</div>
-
-        <div class="SearchItem" v-for="department in departments" :key="department.id">
-          <router-link class="SearchItem-title" :to="{ name: 'department', params: { id: department.id } }">{{ department.name }}</router-link>
-        </div>
-
-      </div>
-
-      <div class="SearchResults-section">
-
-        <div class="SearchResults-title">Projects</div>
-
-        <div class="SearchItem" v-for="project in projects" :key="project.id">
-          <router-link class="SearchItem-title" :to="{ name: 'project', params: { id: project.id } }">{{ project.name }}</router-link>
-          <span class="SearchItem-subtitle" v-bind:class="'ProjectStatus--' + project.status.slug" v-if="project.status.slug !== 'active'">{{ project.status.name }}</span>
-        </div>
-
-      </div>
-
+    <div class="SectionHeader">
+      <span class="SectionHeader-title">Recently Viewed Projects</span>
     </div>
+
+    <project-list :projects="projects"></project-list>
+
+    <div class="SectionHeader">
+      <span class="SectionHeader-title">Recently Viewed People</span>
+    </div>
+
+    <user-list :users="users"></user-list>
+
+    <div class="SectionHeader">
+      <span class="SectionHeader-title">Recently Viewed Departments</span>
+    </div>
+
+    <department-list :departments="departments"></department-list>
 
   </div>
 </template>
@@ -56,6 +39,9 @@
     import departmentService from '../departments/departments.service';
     import projectService from '../projects/projects.service';
     import recentService from '../services/recents';
+    import projectList from '../projects/project-list.vue';
+    import userList from '../users/user-list.vue';
+    import departmentList from '../departments/department-list.vue';
 
     let recent_users, recent_departments, recent_projects;
 
@@ -65,7 +51,7 @@
 
             let users       = recentService.get_users({ include: 'department' });
             let departments = recentService.get_departments();
-            let projects    = recentService.get_projects();
+            let projects    = recentService.get_projects({ include: 'requester' });
 
             axios.all([users, departments, projects])
                 .then(axios.spread((users, departments, projects) => {
@@ -77,6 +63,12 @@
                     });
                 }));
 
+        },
+
+        components: {
+            projectList,
+            userList,
+            departmentList,
         },
 
         data() {

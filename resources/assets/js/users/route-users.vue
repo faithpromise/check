@@ -10,40 +10,26 @@
       </template>
     </page-header>
 
-      <table class="Table">
-
-        <tbody>
-          <tr v-for="user in filtered_users" :key="user.id">
-            <td>
-              <router-link v-bind:to="{ name: 'user', params: { id: user.id } }">{{ user.name }}</router-link>
-            </td>
-            <td>
-              <span v-if="user.department">{{ user.department.data.name }}</span>
-            </td>
-            <td>
-              <span v-if="user.projects_count">{{ user.projects_count }} active projects</span>
-            </td>
-          </tr>
-        </tbody>
-
-      </table>
+    <user-list :users="filtered_users"></user-list>
 
   </div>
 
 </template>
 <script>
 
+    import userList from './user-list.vue';
     import pageHeader from '../../sunday-morning/admin/js/components/page-header.vue';
 
     export default {
 
         components: {
+            userList,
             pageHeader,
         },
 
         data() {
             return {
-                active_only: false,
+                active_only: true,
                 users:       [],
             }
         },

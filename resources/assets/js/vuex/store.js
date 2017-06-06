@@ -2,7 +2,7 @@ import Vuex from 'vuex';
 
 const state = {
     flash_message: null,
-    users:         null,
+    users:         [],
 };
 
 const mutations = {

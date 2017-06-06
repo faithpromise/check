@@ -22,7 +22,9 @@
             </div>
           </router-link>
         </td>
-        <td class="requester">{{ project.requester.data.name }}</td>
+        <td class="requester">
+          <span v-if="project.requester">{{ project.requester.data.name }}</span>
+        </td>
         <!--<td class="agent"><span v-if="project.agent">{{ project.agent.data.name }}</span></td>-->
         <td class="date" v-if="!project.closed_at">{{ project.artwork_due_at | dueFormat }}</td>
         <td class="date" v-if="project.closed_at">{{ project.closed_at | dueFormat }}</td>
