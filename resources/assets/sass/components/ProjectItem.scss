@@ -1,13 +1,17 @@
 .ProjectItem {
   @include link-colors-all($root-text-color);
-  margin-top:    -1px;
-  border-bottom: 1px solid $divider-color;
-  border-top:    1px solid $divider-color;
-  font-size:     calc-em(14px);
+  margin-top: -1px;
+  border-top: $divider-width solid $divider-color;
+  font-size:  calc-em(14px);
 
   &:hover {
     text-decoration: none;
   }
+
+  &:first-child {
+    border-top: none;
+  }
+
 }
 
 @media (max-width: calc-em(512px)) {
@@ -34,7 +38,7 @@
   .ProjectItem {
     display:         flex;
     justify-content: space-between;
-    padding:         calc-em(16px, 14px);
+    padding:         calc-em(20px, 14px);
     //border:          1px solid $divider-color;
     cursor:          pointer;
 
@@ -49,16 +53,17 @@
   }
 
   .ProjectItem-name {
-    font-weight: 700;
+    font-size: calc-em(18px);
+    //font-weight: 300;
   }
 
   .ProjectItem-department:after {
     content: ' / ';
   }
 
-  //.ProjectItem-from {
-  //  width: calc-em(180px, 14px);
-  //}
+  .ProjectItem-from {
+    //font-size: calc-em(14px);
+  }
 
   .ProjectItem-status {
     display:         flex;

@@ -10,18 +10,24 @@
       </template>
     </page-header>
 
-    <div class="Content-container">
+      <table class="Table">
 
-      <div class="Projects-list">
+        <tbody>
+          <tr v-for="user in filtered_users" :key="user.id">
+            <td>
+              <router-link v-bind:to="{ name: 'user', params: { id: user.id } }">{{ user.name }}</router-link>
+            </td>
+            <td>
+              <span v-if="user.department">{{ user.department.data.name }}</span>
+            </td>
+            <td>
+              <span v-if="user.projects_count">{{ user.projects_count }} active projects</span>
+            </td>
+          </tr>
+        </tbody>
 
-        <router-link v-bind:to="{ name: 'user', params: { id: user.id } }" class="UserItem" v-for="user in filtered_users" :key="user.id">
-          <div class="UserItem-name">{{ user.name }}</div>
-          <div class="UserItem-department" v-if="user.department">{{ user.department.data.name }}</div>
-        </router-link>
+      </table>
 
-      </div>
-
-    </div>
   </div>
 
 </template>

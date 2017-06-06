@@ -2,7 +2,7 @@
 
   <div class="Content" v-if="loaded">
 
-    <page-header v-bind:margin="false">
+    <page-header v-bind:divider="true">
       <template slot="title">
         {{ user.name }}
       </template>
@@ -26,9 +26,7 @@
       Active Projects
     </div>
 
-    <div class="Projects-list">
-      <project-list v-bind:projects="active_projects"></project-list>
-    </div>
+    <project-list v-bind:projects="active_projects"></project-list>
 
     <div class="Header" v-if="closed_projects.length">
       Recently Closed Projects

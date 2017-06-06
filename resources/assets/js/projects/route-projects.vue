@@ -1,35 +1,32 @@
 <template>
 
-  <div class="Content Content--flush">
-    <div class="Content-container">
+  <div class="Content">
 
-      <div v-for="agent in agents">
+    <page-header v-bind:divider="true">
+      <template slot="title">Projects</template>
+    </page-header>
 
-        <div class="Projects-divider">
-          <div class="Item">
-            <div class="Item-image">
-              <img v-bind:src="agent.avatar_url">
-            </div>
-            <div class="Item-content">
-              <div class="Item-header">{{ agent.name }}</div>
-            </div>
-          </div>
-        </div>
+    <div v-for="agent in agents">
 
-        <div class="Projects-list">
-          <project-list v-bind:projects="agent.projects.data"></project-list>
-        </div>
+      <div class="SectionHeader">
+        <img class="SectionHeader-avatar" v-bind:src="agent.avatar_url">
+        <span class="SectionHeader-title">{{ agent.name }}</span>
+      </div>
 
+      <div class="Projects-list">
+        <project-list v-bind:projects="agent.projects.data"></project-list>
       </div>
 
     </div>
+
   </div>
 
 </template>
 <script>
 
-    import projectList from './project-list.vue';
     import projectService from './projects.service';
+    import pageHeader from '../../sunday-morning/admin/js/components/page-header.vue';
+    import projectList from './project-list.vue';
 
     export default {
 
@@ -44,6 +41,7 @@
         },
 
         components: {
+            pageHeader,
             projectList,
         },
 

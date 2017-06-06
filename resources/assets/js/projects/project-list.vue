@@ -1,38 +1,38 @@
 <template>
-  <div>
-    <router-link
-            class="ProjectItem"
-            v-bind:class="{ 'is-selected': project.is_selected }"
-            v-for="project in projects"
-            :key="project.id"
-            v-bind:to="{ name: 'project', params: { id: project.id } }"
-    >
 
-      <div class="ProjectItem-about">
-        <div class="ProjectItem-name">{{ project.name }}</div>
+  <table class="Table" v-if="projects.length">
+    <thead>
+      <tr>
+        <th>Project</th>
+        <th>Requester</th>
+        <!--<th>Assigned To</th>-->
+        <th>Due</th>
+        <th>Status</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr v-for="project in projects" :key="project.id">
+        <td class="title">
+          <router-link class="link-complex" :to="{ name: 'project', params: { id: project.id } }">
+            <div class="text-truncate">
+              <div class="ProjectList-title link-complex-target">{{ project.name }}</div>
+              <div class="Table-meta" v-if="project.requester">
+                <span>Submitted {{ project.created_at | moment('from', 'now') }}</span>
+              </div>
+            </div>
+          </router-link>
+        </td>
+        <td class="requester">{{ project.requester.data.name }}</td>
+        <!--<td class="agent"><span v-if="project.agent">{{ project.agent.data.name }}</span></td>-->
+        <td class="date" v-if="!project.closed_at">{{ project.artwork_due_at | dueFormat }}</td>
+        <td class="date" v-if="project.closed_at">{{ project.closed_at | dueFormat }}</td>
+        <td class="status">
+          <span class="ProjectStatus" v-bind:class="'ProjectStatus--' + project.status.slug" v-if="project.status.slug !== 'active'">{{ project.status.name }}</span>
+        </td>
+      </tr>
+    </tbody>
+  </table>
 
-        <div class="ProjectItem-from" v-if="project.requester">
-          by
-          <span class="ProjectItem-department" v-if="project.requester.data.department">{{ project.requester.data.department.data.name }}</span>
-          <span class="ProjectItem-requester">{{ project.requester.data.name }}</span>
-          <span>{{ project.created_at | moment('from', 'now') }}</span>
-        </div>
-
-        <div class="ProjectItem-from" v-if="project.agent">
-          assigned to
-          <span class="ProjectItem-requester">{{ project.agent.data.name }}</span>
-        </div>
-
-      </div>
-
-      <div class="ProjectItem-status">
-        <span class="ProjectItem-due" v-if="!project.closed_at">{{ project.artwork_due_at | dueFormat }}</span>
-        <span class="ProjectItem-due" v-if="project.closed_at">{{ project.closed_at | dueFormat }}</span>
-        <span class="ProjectStatus" v-bind:class="'ProjectStatus--' + project.status.slug" v-if="project.status.slug !== 'active'">{{ project.status.name }}</span>
-      </div>
-
-    </router-link>
-  </div>
 </template>
 <script>
 
