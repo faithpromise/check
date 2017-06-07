@@ -36,6 +36,11 @@ class ProjectsController extends Controller {
             });
         }
 
+        // Include inactive
+
+        if ($request->get('with_inactive'))
+            $projects->withInactive();
+
         // Inactive param
 
         if ($request->get('inactive'))
