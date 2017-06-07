@@ -1,27 +1,10 @@
-//@media (min-width: calc-em(960px)) {
-//
-//  .NewComment {
-//    position:         fixed;
-//    z-index:          97;
-//    bottom:           0;
-//    left:             0;
-//    right:            0;
-//    border-top:       1px solid $divider-color;
-//    background-color: $Nav-bg-color;
-//    color:            #fff;
-//  }
-//
-//  .NewComment-container {
-//    @include container();
-//  }
-//
-//}
-
 .NewComment {
   @extend .Comment;
+  margin-top:       3em;
   margin-bottom:    1.5em;
   background-color: $color-gray-lightest;
-  border-bottom:    1px solid $divider-color;
+  border:           2px solid $divider-color;
+  border-radius:    8px;
 }
 
 .NewComment-container {

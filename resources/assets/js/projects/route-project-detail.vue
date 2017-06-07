@@ -26,17 +26,12 @@
       </div>
     </page-header>
 
-    <div class="Project-comment">
-      <new-comment
-              v-bind:project-id="project.id"
-              v-bind:default-recipients="project.recipients.data">
-      </new-comment>
+    <div class="Tabs-list">
+      <router-link class="Tabs-item" :to="{ name: 'project', params: { id: project.id } }" exact>Comments</router-link>
+      <router-link class="Tabs-item" :to="{ name: 'project_tasks', params: { id: project.id } }" exact>Tasks</router-link>
     </div>
 
-    <comments
-            v-bind:project-id="project.id"
-            v-bind:comments="project.comments.data">
-    </comments>
+    <router-view :project="project"></router-view>
 
   </div>
 
@@ -45,8 +40,6 @@
 
     import projectService from './projects.service';
     import pageHeader from '../../sunday-morning/admin/js/components/page-header.vue';
-    import newComment from '../comments/new-comment.vue';
-    import comments from '../comments/comments.vue';
     import buttonDropdown from '../../sunday-morning/forms/js/components/button-dropdown.vue';
     import router from '../routes';
     import flash from '../services/flash.service';
@@ -58,9 +51,9 @@
 
         beforeRouteEnter(to, from, next) {
 
-            let projects = projectService.find(to.params.id, 'recipients,requester.department,agent,comments.sender,comments.recipients,comments.attachments');
+            let project = projectService.find(to.params.id, 'recipients,requester.department,agent,comments.sender,comments.recipients,comments.attachments');
 
-            projects.then((result) => {
+            project.then((result) => {
                 next(vm => {
                     vm.project   = result.data.data;
                     vm.is_loaded = true;
@@ -71,8 +64,6 @@
 
         components: {
             pageHeader,
-            newComment,
-            comments,
             buttonDropdown,
         },
 
