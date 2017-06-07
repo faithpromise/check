@@ -41,6 +41,7 @@
 </template>
 <script>
 
+    import axios from 'axios';
     import userService from './users.service';
     import projectService from '../projects/projects.service';
     import pageHeader from '../../sunday-morning/admin/js/components/page-header.vue';

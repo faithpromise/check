@@ -1,5 +1,5 @@
 <template>
-  <table class="Table">
+  <table class="Table" v-if="users.length">
     <tbody>
       <tr v-for="user in users" :key="user.id">
         <td>

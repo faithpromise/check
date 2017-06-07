@@ -27,6 +27,19 @@
 //
 @import "components/components";
 
+.SearchForm {
+  margin-top: calc-em(64px, 24px);
+  font-size:  calc-em(24px);
+}
+
+//.SearchForm-button {
+//  > svg {
+//    height:  4em;
+//    width:   4em;
+//    padding: 1em;
+//  }
+//}
+
 /**
  ************************************************
  ************************************************

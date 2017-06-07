@@ -14,11 +14,9 @@
       <tr v-for="project in projects" :key="project.id">
         <td class="title">
           <router-link class="link-complex" :to="{ name: 'project', params: { id: project.id } }">
-            <div class="text-truncate">
-              <div class="ProjectList-title link-complex-target">{{ project.name }}</div>
-              <div class="Table-meta" v-if="project.requester">
-                <span>Submitted {{ project.created_at | moment('from', 'now') }}</span>
-              </div>
+            <div class="ProjectList-title link-complex-target">{{ project.name }}</div>
+            <div class="Table-meta" v-if="project.requester">
+              <span>Submitted {{ project.created_at | moment('from', 'now') }}</span>
             </div>
           </router-link>
         </td>
