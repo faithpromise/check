@@ -1,7 +1,7 @@
 .NewComment {
   @extend .Comment;
-  margin-top:       3em;
-  margin-bottom:    1.5em;
+  margin:           0 0 3em;
+  padding:          1.5em 0;
   background-color: $color-gray-lightest;
   border:           2px solid $divider-color;
   border-radius:    8px;

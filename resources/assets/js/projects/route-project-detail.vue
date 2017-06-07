@@ -26,6 +26,13 @@
       </div>
     </page-header>
 
+    <div class="Project-comment">
+      <new-comment
+              v-bind:project-id="project.id"
+              v-bind:default-recipients="project.recipients.data">
+      </new-comment>
+    </div>
+
     <div class="Tabs-list">
       <router-link class="Tabs-item" :to="{ name: 'project', params: { id: project.id } }" exact>Comments</router-link>
       <router-link class="Tabs-item" :to="{ name: 'project_tasks', params: { id: project.id } }" exact>Tasks</router-link>
@@ -38,6 +45,7 @@
 </template>
 <script>
 
+    import newComment from '../comments/new-comment.vue';
     import projectService from './projects.service';
     import pageHeader from '../../sunday-morning/admin/js/components/page-header.vue';
     import buttonDropdown from '../../sunday-morning/forms/js/components/button-dropdown.vue';
@@ -64,6 +72,7 @@
 
         components: {
             pageHeader,
+            newComment,
             buttonDropdown,
         },
 
