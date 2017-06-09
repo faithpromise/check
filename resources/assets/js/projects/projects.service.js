@@ -7,8 +7,8 @@ export default {
         return axios.get('/api/projects', { params });
     },
 
-    find(id, include) {
-        return axios.get('/api/projects/' + id, { params: { include: include } });
+    find(id, params) {
+        return axios.get('/api/projects/' + id, { params });
     },
 
     by_agent(params) {

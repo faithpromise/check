@@ -59,7 +59,7 @@
 
         beforeRouteEnter(to, from, next) {
 
-            let project = projectService.find(to.params.id, 'recipients,requester.department,agent,comments.sender,comments.recipients,comments.attachments');
+            let project = projectService.find(to.params.id, { include: 'recipients,requester.department,agent,comments.sender,comments.recipients,comments.attachments' });
 
             project.then((result) => {
                 next(vm => {

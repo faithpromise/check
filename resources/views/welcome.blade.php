@@ -11,6 +11,7 @@ $scripts = [
     '//cdn.rawgit.com/taylorhakes/promise-polyfill/master/promise.js',
     'https://unpkg.com/axios@0.16.0/dist/axios' . ($is_production ? '.min.js' : '.js'),
     '//cdnjs.cloudflare.com/ajax/libs/moment.js/2.18.1/moment' . ($is_production ? '.min.js' : '.js'),
+    '//cdnjs.cloudflare.com/ajax/libs/pikaday/1.6.0/pikaday' . ($is_production ? '.min.js' : '.js'),
     '//cdnjs.cloudflare.com/ajax/libs/pusher/4.1.0/pusher' . ($is_production ? '.min.js' : '.js'),
     '//cdn.rawgit.com/leonardosantos/momentjs-business/cb4ddf2a/momentjs-business.js',
     '//cdnjs.cloudflare.com/ajax/libs/vue/2.2.6/vue' . ($is_production ? '.min.js' : '.js'),
@@ -29,6 +30,7 @@ $scripts = [
         <title>Project Management System</title>
 
         <!-- Styles -->
+        <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/pikaday/1.6.0/css/pikaday.min.css">
         <link rel="stylesheet" href="{{ $is_production ? mix($css_url) : '/' . $css_url }}">
     </head>
     <body>

@@ -20,6 +20,7 @@ mix.webpackConfig({
         'vue':          'Vue',
         'vuex':         'Vuex',
         'vue-resource': 'VueResource',
+        'pikaday':      'Pikaday',
     },
     resolve:   {
         alias: { vue: 'vue/dist/vue.js' }
