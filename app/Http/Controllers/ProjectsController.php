@@ -103,10 +103,6 @@ class ProjectsController extends Controller {
 
         return $data->respond();
 
-//        return [
-//            'data' => Project::with('event', 'agent', 'requester', 'recipients')->whereId($id)->first()
-//        ];
-
     }
 
     public function store(Request $request) {
@@ -149,29 +145,6 @@ class ProjectsController extends Controller {
         return fractal($project, new ProjectsTransformer);
 
     }
-
-//    public function uploadThumb($id, Request $request) {
-//
-//        /** @var Project $project */
-//        $project = Project::find($id);
-//        $file = $request->file('file')[0];
-//        $timestamp = Carbon::now()->timestamp;
-//
-//        $path_info = pathinfo($file->getClientOriginalName());
-//        $project->setThumbFileName($timestamp . '.' . $path_info['extension']);
-//        $project->save();
-//
-//        $file->move(storage_path('project-thumbs'), $project->getThumbPath());
-//
-//    }
-
-//    public function thumb($id) {
-//        /** @var Project $project */
-//        $project = Project::find($id);
-//        $img = Image::make($project->getThumbPath())->fit(200, 200);
-//
-//        return $img->response($project->getThumbExtension());
-//    }
 
     private function update_recipients(Project $project, $recipients) {
         if ($recipients) {
