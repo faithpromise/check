@@ -44,8 +44,5 @@ Route::post('/comments', 'CommentsController@store');
 Route::put('/comments/{id}', 'CommentsController@update');
 
 // Attachments
-
-Route::get('/attachments/{id}/thumb.{ext}', 'AttachmentsController@thumb');
 Route::post('/attachments', 'AttachmentsController@store');
 Route::delete('/attachments/{id}', 'AttachmentsController@destroy');
-

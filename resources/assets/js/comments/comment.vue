@@ -20,7 +20,7 @@
       <div class="Attachment-list" v-show="comment.attachments.data.length">
         <div class="Attachment-item" v-for="attachment in comment.attachments.data" :key="attachment.id">
           <img class="Attachment-thumb" v-bind:src="attachment.thumb_url">
-          <span class="Attachment-name">{{ attachment.name }}</span>
+          <a class="Attachment-name" target="_blank" :href="attachment.download_url">{{ attachment.name }}</a>
         </div>
       </div>
     </div>

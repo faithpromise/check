@@ -20,5 +20,11 @@ Route::post('/auth/send-token', 'Auth\ForgotPasswordController@sendResetLinkEmai
 Route::post('/auth/token-login', 'Auth\LoginController@token_login');
 Route::post('/auth/reset-password', ['uses' => 'Auth\ResetPasswordController@reset', 'middleware' => ['jwt.auth']]);
 
+// Attachments
+
+Route::get('api/attachments/{id}/file.{ext}', 'AttachmentsController@download');
+Route::get('api/attachments/{id}/thumb.{ext}', 'AttachmentsController@thumb');
+Route::get('api/projects/{id}/thumb.{ext}', 'ProjectsController@thumb');
+
 /** @noinspection PhpVoidFunctionResultUsedInspection */
 Route::get('{path?}', 'Controller@layout')->where('path', '.+');
