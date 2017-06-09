@@ -13,6 +13,8 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+// Projects
+
 Route::get('/projects', 'ProjectsController@index');
 Route::get('/projects/{id}', 'ProjectsController@show');
 Route::get('/agents', 'AgentsController@index');
